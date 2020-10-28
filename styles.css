@@ -18,12 +18,23 @@ main {
 }
 
 h1 {
-  /* resize */
-}
+  font-size: 1.7em;
 
-.filter {
-  border: 1px solid #353567;
 }
+.sidebar-item {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.divider {
+  background-color: #353567;
+  height: 1px;
+  margin-top: 20px;
+}
+/* .filter {
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
+} */
 
 h2 {
   color: #BFBFDD
@@ -34,6 +45,12 @@ h2 {
   background-color: #5356A4;
   border: #353567;
   color: #E9E9F3;
+  margin-right: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  font-size: 1.7em;
+  font-weight: bold;
 }
 
 .form-and-grid {
