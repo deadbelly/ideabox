@@ -27,7 +27,7 @@ h1 {
 }
 .divider {
   background-color: #353567;
-  height: 1px;
+  height: 2px;
   margin-top: 20px;
 }
 /* .filter {
@@ -46,7 +46,7 @@ h2 {
   background-color: #5356A4;
   border: 2px solid #353567;
   border-radius: 5%;
-  height: 11%;
+  height: 65px;
   color: #E9E9F3;
   margin-right: 20px;
   margin-top: 30px;
@@ -74,8 +74,22 @@ form {
   flex-direction: column;
   height: 40vh;
   justify-content: space-evenly;
-  width: 40vh;
-  border: dotted;
+  width: 40%;
+  /* border: dotted; */
+}
+
+.title-input {
+  height: 68%;
+
+}
+
+.body-input {
+  height: 90%;
+}
+
+.form-item {
+  border: 2px solid #353567;
+  border-radius: 5%;
 }
 
 textarea {
@@ -85,6 +99,9 @@ textarea {
   width: 100%;
   background-color: #353567;
   color: white;
+  height: 2.3em;
+  font-size: 1.4em;
+  font-weight: bold;
 }
 
 .search-line {
