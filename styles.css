@@ -1,0 +1,86 @@
+
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.sidebar {
+ background-color: #1F1F3D;
+ color: #E9E9F3;
+}
+
+h1 {
+  /* resize */
+}
+
+.filter {
+  border: 1px solid #353567;
+}
+
+h2 {
+  color: #BFBFDD
+  /* resize */
+}
+
+.show-starred-button {
+  background-color: #5356A4;
+  border: #353567;
+  color: #E9E9F3;
+}
+
+.input-form {
+  background-color: #A9AAD2;
+}
+
+form {
+
+}
+
+.ideas-grid {
+  background-color: #EAEAF4;
+}
+
+.idea {
+   /* put in a grid?  */
+}
+
+.star-bar {
+  background-color:  #6E646B;
+}
+
+.fave-button {
+  /* make the star! */
+}
+
+.delete-button {
+  /* make the x! */
+}
+
+.card-body {
+  card background-color: #FFFFFF
+  color: #1F1F3D
+}
+
+h3 {
+/* resize  */
+}
+
+.comment-bar {
+  background-color: #5356A4;
+}
+
+.comment-button {
+
+}
+
+.hidden {
+  display: none;
+}
+
+
+
+bar order:
+- star.svg
+- star-active.svg
+- delete.svg
+- delete-active.svg
+- comment.svg
