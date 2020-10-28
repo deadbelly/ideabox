@@ -46,10 +46,39 @@ h2 {
   flex-direction: column;
   justify-content: center;
   height: 40vh;
+  align-items: center;
 }
 
 form {
-  width: 20vh;
+  display: flex;
+  flex-direction: column;
+  height: 40vh;
+  justify-content: space-evenly;
+  width: 40vh;
+  border: dotted;
+}
+
+textarea {
+  width: 100%;
+}
+.save-button {
+  width: 100%;
+  background-color: #353567;
+  color: white;
+}
+
+.search-line {
+  display: flex;
+  width: 100%;
+}
+
+.search-button {
+  background-color: #353567;
+  width: 10%;
+}
+
+.seach-bar {
+  width: 90%;
 }
 
 .ideas-grid {

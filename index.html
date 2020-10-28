@@ -19,15 +19,21 @@
   <div class="form-and-grid">
     <section class="input-form">
       <form>
-        <label for="title-input">Title</label>
-        <textarea name="title-input" class="title-input" rows="1" cols="70"></textarea>
-        <label for="body-input">Body</label>
-        <textarea name="body-input" class="body-input" rows="3" cols="70"></textarea>
+        <div>
+          <label for="title-input">Title</label>
+          <textarea name="title-input" class="title-input" rows="1"></textarea>
+        </div>
+        <div>
+          <label for="body-input">Body</label>
+          <textarea name="body-input" class="body-input" rows="3"></textarea>
+        </div>
         <button class="save-button">Save</button>
+      <div class="search-line">
         <button class="search-button">
            <img class="search-icon" src="assets/search.svg" alt="searching magnifying glass">
         </button>
-        <input placeholder="Search ideas">
+        <input class="search-bar" placeholder="Search ideas">
+      </div>
       </form>
     </section>
 
