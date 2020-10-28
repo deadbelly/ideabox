@@ -1,0 +1,130 @@
+
+* {
+  font-family: 'Open Sans', sans-serif;
+  margin: 0;
+}
+
+main {
+  display: flex;
+}
+
+.sidebar {
+ background-color: #1F1F3D;
+ color: #E9E9F3;
+ display: flex;
+ flex-direction: column;
+ height: 100vh;
+ width: 20%;
+}
+
+h1 {
+  /* resize */
+}
+
+.filter {
+  border: 1px solid #353567;
+}
+
+h2 {
+  color: #BFBFDD
+  /* resize */
+}
+
+.show-starred-button {
+  background-color: #5356A4;
+  border: #353567;
+  color: #E9E9F3;
+}
+
+.form-and-grid {
+  width: 80%;
+}
+
+.input-form {
+  background-color: #A9AAD2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 40vh;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  height: 40vh;
+  justify-content: space-evenly;
+  width: 40vh;
+  border: dotted;
+}
+
+textarea {
+  width: 100%;
+}
+.save-button {
+  width: 100%;
+  background-color: #353567;
+  color: white;
+}
+
+.search-line {
+  display: flex;
+  width: 100%;
+}
+
+.search-button {
+  background-color: #353567;
+  width: 10%;
+}
+
+.seach-bar {
+  width: 90%;
+}
+
+.ideas-grid {
+  background-color: #EAEAF4;
+  height: 60vh;
+}
+
+.idea {
+   /* put in a grid?  */
+}
+
+.star-bar {
+  background-color:  #6E646B;
+}
+
+.fave-button {
+  /* make the star! */
+}
+
+.delete-button {
+  /* make the x! */
+}
+
+.card-body {
+  background-color: #FFFFFF;
+  color: #1F1F3D;
+}
+
+h3 {
+/* resize  */
+}
+
+.comment-bar {
+  background-color: #5356A4;
+  color: white;
+}
+
+.comment-button {
+
+}
+
+.hidden {
+  display: none;
+}
+
+img {
+  height: 15px;
+  width: 15px;
+}

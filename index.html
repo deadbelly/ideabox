@@ -7,43 +7,62 @@
     <link rel="stylesheet" type="text/css" href="./styles.css">
   </head>
   <body>
+  <main>
     <section class="sidebar">
       <h1>IdeaBox</h1>
-      <article>
+      <article class="filter">
         <h2>Filter Starred Ideas</h2>
         <button class="show-starred-button">Show Starred Ideas</button>
       </article>
     </section>
 
+  <div class="form-and-grid">
     <section class="input-form">
       <form>
-        <label for="title-input">Title</label>
-        <textarea name="title-input" class="title-input" rows="1" cols="70"></textarea>
-        <label for="body-input">Body</label>
-        <textarea name="body-input" class="body-input" rows="3" cols="70"></textarea>
+        <div>
+          <label for="title-input">Title</label>
+          <textarea name="title-input" class="title-input" rows="1"></textarea>
+        </div>
+        <div>
+          <label for="body-input">Body</label>
+          <textarea name="body-input" class="body-input" rows="3"></textarea>
+        </div>
         <button class="save-button">Save</button>
-        <button class="search-button">[search icon]</button>
-        <input placeholder="Search ideas">
+      <div class="search-line">
+        <button class="search-button">
+           <img class="search-icon" src="assets/search.svg" alt="searching magnifying glass">
+        </button>
+        <input class="search-bar" placeholder="Search ideas">
+      </div>
       </form>
     </section>
 
     <section class="ideas-grid">
       <div class="idea" id="">
-        <span>
-          <button class="fave-button">[fave icon]</button>
-          <button class="delete-button">[delete icon]</button>
+        <span class="star-bar">
+          <button class="fave-button">
+           <img class="star-icon" src="assets/star.svg" alt="star">
+           <img class="star-icon-active hidden" src="assets/star-active.svg" alt="red star">
+         </button>
+          <button class="delete-button">
+           <img class="delete-icon" src="assets/delete.svg" alt="delete ex">
+           <img class="delete-icon-active hidden" src="assets/delete-active.svg" alt="delete ex">
+         </button>
         </span>
         <article class="card-body">
           <h3>Title</h3>
           <p>Idea body. Don't ever play yourself. Every change I get, I water the plants, Lion! Cloth talk.</p>
         </article>
-        <span>
-          <button name="comment-button" class="comment-button">[comment icon]</button>
+        <span class="comment-bar">
+          <button name="comment-button" class="comment-button">
+            <img class="comment-icon" src="assets/comment.svg" alt="adding plus">
+          </button>
           <label for="comment-button">Comment</label>
         </span>
       </div>
     </section>
-
+  </div>
+  <main>
     <script src="./src/main.js"></script>
     <!-- <script src="./src/idea.js"></script> -->
   </body>
