@@ -1,12 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>IdeaBox</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./styles.css">
   </head>
   <body>
+    <section class="sidebar">
+      <h1>IdeaBox</h1>
+      <article>
+        <h2>Filter Starred Ideas</h2>
+        <button class="show-starred-button">Show Starred Ideas</button>
+      </article>
+    </section>
+
+    <section class="input-form">
+      <form>
+        <label for="title-input">Title</label>
+        <textarea name="title-input" class="title-input" rows="1" cols="70"></textarea>
+        <label for="body-input">Body</label>
+        <textarea name="body-input" class="body-input" rows="3" cols="70"></textarea>
+        <button class="save-button">Save</button>
+        <button class="search-button">[search icon]</button>
+        <input placeholder="Search ideas">
+      </form>
+    </section>
+
+    <section class="ideas-grid">
+      <div class="idea" id="">
+        <span>
+          <button class="fave-button">[fave icon]</button>
+          <button class="delete-button">[delete icon]</button>
+        </span>
+        <article class="card-body">
+          <h3>Title</h3>
+          <p>Idea body. Don't ever play yourself. Every change I get, I water the plants, Lion! Cloth talk.</p>
+        </article>
+        <span>
+          <button name="comment-button" class="comment-button">[comment icon]</button>
+          <label for="comment-button">Comment</label>
+        </span>
+      </div>
+    </section>
 
     <script src="./src/main.js"></script>
+    <!-- <script src="./src/idea.js"></script> -->
   </body>
 </html>
