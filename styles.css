@@ -1,11 +1,20 @@
 
 * {
   font-family: 'Open Sans', sans-serif;
+  margin: 0;
+}
+
+main {
+  display: flex;
 }
 
 .sidebar {
  background-color: #1F1F3D;
  color: #E9E9F3;
+ display: flex;
+ flex-direction: column;
+ height: 100vh;
+ width: 20%;
 }
 
 h1 {
@@ -27,16 +36,25 @@ h2 {
   color: #E9E9F3;
 }
 
+.form-and-grid {
+  width: 80%;
+}
+
 .input-form {
   background-color: #A9AAD2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 40vh;
 }
 
 form {
-
+  width: 20vh;
 }
 
 .ideas-grid {
   background-color: #EAEAF4;
+  height: 60vh;
 }
 
 .idea {
@@ -56,8 +74,8 @@ form {
 }
 
 .card-body {
-  card background-color: #FFFFFF
-  color: #1F1F3D
+  background-color: #FFFFFF;
+  color: #1F1F3D;
 }
 
 h3 {
@@ -66,6 +84,7 @@ h3 {
 
 .comment-bar {
   background-color: #5356A4;
+  color: white;
 }
 
 .comment-button {
@@ -74,4 +93,9 @@ h3 {
 
 .hidden {
   display: none;
+}
+
+img {
+  height: 15px;
+  width: 15px;
 }
