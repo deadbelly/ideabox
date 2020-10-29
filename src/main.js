@@ -15,7 +15,6 @@ var cards = []
 
 function saveCard(event) {
   event.preventDefault()
-  // checkInput()
   var newIdea = new Idea(titleInput.value, bodyInput.value)
   cards.push(newIdea)
   displayCards(cards)
@@ -23,11 +22,19 @@ function saveCard(event) {
   bodyInput.value = ""
 }
 
-// function checkInput() {
-//   if (titleInput.value && bodyInput.value) {
-//     saveButton.disabled = false
-// }
-// }
+function isInput() {
+  if (titleInput.value && bodyInput.value) {
+    return true
+}
+}
+
+function enableSave() {
+  if (isInput()) {
+    button.disabled = false
+  } else {
+    button.disabled = true
+  }
+}
 
 function displayCards(cards) {
   ideasGrid.innerHTML = ""
@@ -57,6 +64,7 @@ function displayCards(cards) {
   </div>`
 }
 }
+
 
 
 //checking the input field - if there is no value then disable save button**
