@@ -18,7 +18,7 @@ main {
 }
 
 h1 {
-  font-size: 1.7em;
+  font-size: 2.4vmin;
 
 }
 .sidebar-item {
@@ -38,7 +38,7 @@ h1 {
 
 h2 {
   color: #BFBFDD;
-  font-size: 1.4em;
+  font-size: 1.9vmin;
   /* resize */
 }
 
@@ -46,13 +46,13 @@ h2 {
   background-color: #5356A4;
   border: 2px solid #353567;
   border-radius: 5%;
-  height: 65px;
+  height: 50px;
   color: #E9E9F3;
   margin-right: 20px;
   margin-top: 30px;
   margin-bottom: 10px;
   margin-left: 20px;
-  font-size: 1.7em;
+  font-size: 2.4vmin;
   font-weight: bold;
 }
 
@@ -104,7 +104,7 @@ label {
   background-color: #353567;
   color: white;
   height: 2.3em;
-  font-size: 1.4em;
+  font-size: 2.4vmin;
   font-weight: bold;
 }
 
@@ -160,7 +160,7 @@ label {
   background-color: #FFFFFF;
   color: #1F1F3D;
   height: 8em;
-  font-size: 1.55em;
+  font-size: 2.4vmin;
   padding: 7%;
   border-right: 2px solid #5356A4;
   border-left: 2px solid #5356A4;
