@@ -10,7 +10,7 @@ saveButton.addEventListener('click', saveCard)
 titleInput.addEventListener('keyup', enableSave)
 bodyInput.addEventListener('keyup', enableSave)
 ideasGrid.addEventListener('click', deleteCard)
-
+ideasGrid.addEventListener('click', starFavorite)
 
 // variables
 
@@ -42,13 +42,13 @@ function enableSave() {
   }
 }
 
-function displayCards() {
+function displayCards(cardArray) {
   ideasGrid.innerHTML = ''
-  for(var i = 0; i < cards.length; i ++) {
+  for(var i = 0; i < cardArray.length; i ++) {
   ideasGrid.innerHTML +=
-  `<div class="idea" id="${cards[i].id}">
+  `<div class="idea" id="${cardArray[i].id}">
     <span class="star-bar">
-      <button class="fave-button">
+      <button class="fave-button ${checkStarred(cardArray[i])}">
        <img class="star-icon" src="assets/star.svg" alt="star">
        <img class="star-icon-active" src="assets/star-active.svg" alt="red star">
      </button>
@@ -58,8 +58,8 @@ function displayCards() {
      </button>
     </span>
     <article class="card-body">
-      <h3>${cards[i].title}</h3>
-      <p>${cards[i].body}</p>
+      <h3>${cardArray[i].title}</h3>
+      <p>${cardArray[i].body}</p>
     </article>
     <span class="comment-bar">
       <button name="comment-button" class="comment-button">
@@ -81,9 +81,31 @@ function deleteCard(event) {
       }
     }
   }
-  displayCards()
+
+  displayCards(cards)
 }
 
 //add function that removes event.target id from cards
 
 //add event listener to ideas grid that runs this new function and then displayCards()
+
+function starFavorite() {
+  if (event.target.classList.contains('star-icon-active')) {
+    var idToStar = event.target.closest('.idea').id
+    for (var i = 0; i < cards.length; i++) {
+      if (cards[i].id == idToStar) {
+        cards[i].toggleStar()
+        break
+      }
+    }
+  }
+
+  displayCards(cards)
+
+}
+
+function checkStarred(card) {
+    if (card.star) {
+      return 'starred'
+  }
+}
