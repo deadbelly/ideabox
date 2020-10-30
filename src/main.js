@@ -9,8 +9,7 @@ var ideasGrid = document.querySelector('.ideas-grid')
 saveButton.addEventListener('click', saveCard)
 titleInput.addEventListener('keyup', enableSave)
 bodyInput.addEventListener('keyup', enableSave)
-ideasGrid.addEventListener('click', deleteCard)
-ideasGrid.addEventListener('click', starFavorite)
+ideasGrid.addEventListener('click', runStarBar)
 
 // variables
 
@@ -71,41 +70,38 @@ function displayCards(cardArray) {
   }
 }
 
-function deleteCard(event) {
-  if (event.target.classList.contains('delete-icon-active')) {
-    var idToDelete = event.target.closest('.idea').id
-    for (var i = 0; i < cards.length; i++){
-      if (cards[i].id == idToDelete) {
-        cards.splice(i, 1)
-        break
-      }
-    }
+function deleteCard(elementClass, targetIndex) {
+  if (elementClass == 'delete-icon-active') {
+    cards.splice(targetIndex, 1)
   }
-
-  displayCards(cards)
 }
 
 //add function that removes event.target id from cards
 
 //add event listener to ideas grid that runs this new function and then displayCards()
 
-function starFavorite() {
-  if (event.target.classList.contains('star-icon-active')) {
-    var idToStar = event.target.closest('.idea').id
-    for (var i = 0; i < cards.length; i++) {
-      if (cards[i].id == idToStar) {
-        cards[i].toggleStar()
-        break
-      }
-    }
+function starFavorite(elementClass, targetCard) {
+  if (elementClass == 'star-icon-active') {
+    targetCard.toggleStar()
   }
-
-  displayCards(cards)
-
 }
 
 function checkStarred(card) {
     if (card.star) {
       return 'starred'
   }
+}
+
+function runStarBar(event) {
+  var targetClass = event.target.classList
+  var idToTarget = event.target.closest('.idea').id
+  if (targetClass === 'star-icon-active' || 'delete-icon-active') {
+    for (var i = 0; i < cards.length; i++) {
+      if (cards[i].id == idToTarget) {
+        starFavorite(targetClass, cards[i])
+        deleteCard(targetClass, i)
+      }
+    }
+  }
+  displayCards(cards)
 }
