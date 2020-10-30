@@ -24,6 +24,7 @@ function saveCard(event) {
   displayCards(cards)
   titleInput.value = ""
   bodyInput.value = ""
+  enableSave()
 }
 
 function isInput() {
@@ -33,7 +34,6 @@ function isInput() {
 }
 
 function enableSave() {
-
   if (isInput()) {
     saveButton.disabled = false
   } else {

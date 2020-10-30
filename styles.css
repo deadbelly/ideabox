@@ -97,6 +97,16 @@ label {
   font-size: 2.1vmin;
   font-weight: bold;
   height: 2.3em;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #5356A4;
+}
+
+.save-button:hover:disabled {
+  background-color: #EAEAF4;
+  cursor: not-allowed;
 }
 
 .search-line {
