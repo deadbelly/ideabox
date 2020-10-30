@@ -77,6 +77,7 @@ function deleteCard(event) {
     for (var i = 0; i < cards.length; i++){
       if (cards[i].id == idToDelete) {
         cards.splice(i, 1)
+        break
       }
     }
   }
