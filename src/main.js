@@ -50,11 +50,11 @@ function displayCards() {
     <span class="star-bar">
       <button class="fave-button">
        <img class="star-icon" src="assets/star.svg" alt="star">
-       <img class="star-icon-active hidden" src="assets/star-active.svg" alt="red star">
+       <img class="star-icon-active" src="assets/star-active.svg" alt="red star">
      </button>
       <button class="delete-button">
        <img class="delete-icon" src="assets/delete.svg" alt="delete ex">
-       <img class="delete-icon-active hidden" src="assets/delete-active.svg" alt="delete ex">
+       <img class="delete-icon-active" src="assets/delete-active.svg" alt="delete ex">
      </button>
     </span>
     <article class="card-body">
@@ -72,7 +72,7 @@ function displayCards() {
 }
 
 function deleteCard(event) {
-  if (event.target.classList.contains('delete-icon')) {
+  if (event.target.classList.contains('delete-icon-active')) {
     var idToDelete = event.target.closest('.idea').id
     for (var i = 0; i < cards.length; i++){
       if (cards[i].id == idToDelete) {
