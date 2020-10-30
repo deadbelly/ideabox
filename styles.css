@@ -166,7 +166,7 @@ label {
 }
 
 .fave-button:hover .star-icon-active {
-  display: flex;
+  display: inline;
 }
 
 .delete-button {
@@ -183,7 +183,7 @@ label {
 }
 
 .delete-button:hover .delete-icon-active {
-  display: flex;
+  display: inline;
 }
 
 .card-body {
