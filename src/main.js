@@ -7,15 +7,18 @@ var ideasGrid = document.querySelector(".ideas-grid")
 
 //event handlers
 saveButton.addEventListener("click", saveCard)
+titleInput.addEventListener("keyup", enableSave)
+bodyInput.addEventListener("keyup", enableSave)
+
 
 // variables
+
 var cards = []
 
 //functions
 
 function saveCard(event) {
   event.preventDefault()
-  // checkInput()
   var newIdea = new Idea(titleInput.value, bodyInput.value)
   cards.push(newIdea)
   displayCards(cards)
@@ -23,11 +26,20 @@ function saveCard(event) {
   bodyInput.value = ""
 }
 
-// function checkInput() {
-//   if (titleInput.value && bodyInput.value) {
-//     saveButton.disabled = false
-// }
-// }
+function isInput() {
+  if (titleInput.value && bodyInput.value) {
+    return true
+  }
+}
+
+function enableSave() {
+
+  if (isInput()) {
+    saveButton.disabled = false
+  } else {
+    saveButton.disabled = true
+  }
+}
 
 function displayCards(cards) {
   ideasGrid.innerHTML = ""
@@ -57,11 +69,3 @@ function displayCards(cards) {
   </div>`
 }
 }
-
-
-//checking the input field - if there is no value then disable save button**
-// add hover to button in a lighter color if button is disabled (css)
-// - lighter color, cursor not pointer(css)
-//after you click save display a new card, taking an object of the idae class and using innerHTML to interpolate - createCard function
-// clear input fields - sets both .values to empty
-// stop the page from reloading - preventDefault
