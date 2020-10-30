@@ -1,14 +1,15 @@
 //querySelectors
-var saveButton = document.querySelector(".save-button")
-var titleInput = document.querySelector(".title-input")
-var bodyInput = document.querySelector(".body-input")
-var ideasGrid = document.querySelector(".ideas-grid")
+var saveButton = document.querySelector('.save-button')
+var titleInput = document.querySelector('.title-input')
+var bodyInput = document.querySelector('.body-input')
+var ideasGrid = document.querySelector('.ideas-grid')
 
 
-//event handlers
-saveButton.addEventListener("click", saveCard)
-titleInput.addEventListener("keyup", enableSave)
-bodyInput.addEventListener("keyup", enableSave)
+//event listeners
+saveButton.addEventListener('click', saveCard)
+titleInput.addEventListener('keyup', enableSave)
+bodyInput.addEventListener('keyup', enableSave)
+ideasGrid.addEventListener('click', deleteCard)
 
 
 // variables
@@ -22,8 +23,8 @@ function saveCard(event) {
   var newIdea = new Idea(titleInput.value, bodyInput.value)
   cards.push(newIdea)
   displayCards(cards)
-  titleInput.value = ""
-  bodyInput.value = ""
+  titleInput.value = ''
+  bodyInput.value = ''
   enableSave()
 }
 
@@ -41,11 +42,11 @@ function enableSave() {
   }
 }
 
-function displayCards(cards) {
-  ideasGrid.innerHTML = ""
+function displayCards() {
+  ideasGrid.innerHTML = ''
   for(var i = 0; i < cards.length; i ++) {
   ideasGrid.innerHTML +=
-  `<div class="idea" id="">
+  `<div class="idea" id="${cards[i].id}">
     <span class="star-bar">
       <button class="fave-button">
        <img class="star-icon" src="assets/star.svg" alt="star">
@@ -67,5 +68,21 @@ function displayCards(cards) {
       <label for="comment-button">Comment</label>
     </span>
   </div>`
+  }
 }
+
+function deleteCard(event) {
+  if (event.target.classList.contains('delete-icon')) {
+    var idToDelete = event.target.closest('.idea').id
+    for (var i = 0; i < cards.length; i++){
+      if (cards[i].id == idToDelete) {
+        cards.splice(i, 1)
+      }
+    }
+  }
+  displayCards()
 }
+
+//add function that removes event.target id from cards
+
+//add event listener to ideas grid that runs this new function and then displayCards()
