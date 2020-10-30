@@ -169,6 +169,14 @@ label {
   display: inline;
 }
 
+.starred .star-icon {
+  display: none;
+}
+
+.starred .star-icon-active {
+  display: inline;
+}
+
 .delete-button {
   background-color: transparent;
   border: none;

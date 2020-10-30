@@ -18,4 +18,8 @@ class Idea {
   updateIdea() {
 
   }
+
+  toggleStar() {
+    this.star = !this.star
+  }
 }
