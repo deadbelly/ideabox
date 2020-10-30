@@ -157,9 +157,33 @@ label {
  border: none;
 }
 
+.star-icon-active {
+  display: none;
+}
+
+.fave-button:hover .star-icon {
+  display: none;
+}
+
+.fave-button:hover .star-icon-active {
+  display: inline;
+}
+
 .delete-button {
   background-color: transparent;
   border: none;
+}
+
+.delete-icon-active {
+  display: none;
+}
+
+.delete-button:hover .delete-icon {
+  display: none;
+}
+
+.delete-button:hover .delete-icon-active {
+  display: inline;
 }
 
 .card-body {
@@ -187,9 +211,9 @@ h3 {
   border: none;
 }
 
-.hidden {
+/* .hidden {
   display: none;
-}
+} */
 
 img {
   height: 20px;
