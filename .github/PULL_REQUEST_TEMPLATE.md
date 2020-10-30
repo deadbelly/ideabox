@@ -1,15 +1,6 @@
----
-name: PR template
-about: Template for submitting pull requests
-title: ''
-labels: ''
-assignees: ''
+**What changes are you making?**
 
----
-
-- What changes are you making? 
-
-- Do you have any questions or issues about this addition?  
+**Do you have any questions or issues about this addition?**
 
 - [ ] Did you test your code locally first?
-- [ ] Does this follow our intended guidelines (DRY & commented) for project code? 
+- [ ] Does this follow our intended guidelines (DRY & commented) for project code?
