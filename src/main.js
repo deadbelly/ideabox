@@ -78,8 +78,8 @@ function deleteCard(event) {
     var idToDelete = event.target.closest('.idea').id
     for (var i = 0; i < cards.length; i++){
       if (cards[i].id == idToDelete) {
-        cards[i].deleteFromStorage()
-        console.log("hi")
+        // cards[i].deleteFromStorage()
+        console.log(cards[i])
         cards.splice(i, 1)
         break
       }
@@ -116,7 +116,7 @@ function checkStarred(card) {
 
 function loadFromStorage() {
   for (var i=0; i < localStorage.length; i++) {
-    cards.push(localStorage.getItem(localStorage.key(i)))
+    cards.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
   }
   displayCards(cards)
 }
