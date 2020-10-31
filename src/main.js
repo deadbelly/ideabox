@@ -9,9 +9,9 @@ var ideasGrid = document.querySelector('.ideas-grid')
 saveButton.addEventListener('click', saveCard)
 titleInput.addEventListener('keyup', enableSave)
 bodyInput.addEventListener('keyup', enableSave)
-ideasGrid.addEventListener('click', deleteCard)
-ideasGrid.addEventListener('click', starFavorite)
 window.addEventListener('load', loadFromStorage)
+ideasGrid.addEventListener('click', runStarBar)
+
 
 // variables
 
@@ -73,39 +73,22 @@ function displayCards(cardArray) {
   }
 }
 
-function deleteCard(event) {
-  if (event.target.classList.contains('delete-icon-active')) {
-    var idToDelete = event.target.closest('.idea').id
-    for (var i = 0; i < cards.length; i++){
-      if (cards[i].id == idToDelete) {
-        cards[i].deleteFromStorage()
-        cards.splice(i, 1)
-        break
-      }
-    }
-  }
 
-  displayCards(cards)
+
+//this checks if the event is targeting the delete button and deletes it if so.
+function deleteCard(elementClass, targetIndex) {
+  if (elementClass == 'delete-icon-active') {
+    cards[i].deleteFromStorage()
+    cards.splice(targetIndex, 1)
+  }
 }
 
-//add function that removes event.target id from cards
-
-//add event listener to ideas grid that runs this new function and then displayCards()
-
-function starFavorite() {
-  if (event.target.classList.contains('star-icon-active')) {
-    var idToStar = event.target.closest('.idea').id
-    for (var i = 0; i < cards.length; i++) {
-      if (cards[i].id == idToStar) {
-        cards[i].toggleStar()
-        cards[i].saveToStorage()
-        break
-      }
-    }
+//this checks if the event is targeting the star button and runs toggleStar if so
+function starFavorite(elementClass, targetCard) {
+  if (elementClass == 'star-icon-active') {
+    targetCard.toggleStar()
+    cards[i].saveToStorage()
   }
-
-  displayCards(cards)
-
 }
 
 function checkStarred(card) {
@@ -125,6 +108,7 @@ function loadFromStorage() {
 }
 
 
+
 //This function populates a new object with the same info that we have in storage.
 //It gets called in loadFromStorage.
 //It could work as a method, if we made the new Idea inside loadFromStorage, and then called it.
@@ -136,4 +120,19 @@ function loadIdea(dataObject) {
   idea.star = dataObject.star
 
   return idea
+}
+  
+//this looks for events on the star bar and runs the appropriate functions, then updates the display
+function runStarBar(event) {
+  var targetClass = event.target.classList
+  var idToTarget = event.target.closest('.idea').id
+  if (targetClass === 'star-icon-active' || 'delete-icon-active') {
+    for (var i = 0; i < cards.length; i++) {
+      if (cards[i].id == idToTarget) {
+        starFavorite(targetClass, cards[i])
+        deleteCard(targetClass, i)
+      }
+    }
+  }
+  displayCards(cards)
 }
