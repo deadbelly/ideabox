@@ -74,11 +74,12 @@ function displayCards(cardArray) {
 }
 
 
+
 //this checks if the event is targeting the delete button and deletes it if so.
 function deleteCard(elementClass, targetIndex) {
   if (elementClass == 'delete-icon-active') {
+    cards[i].deleteFromStorage()
     cards.splice(targetIndex, 1)
-
   }
 }
 
@@ -86,6 +87,7 @@ function deleteCard(elementClass, targetIndex) {
 function starFavorite(elementClass, targetCard) {
   if (elementClass == 'star-icon-active') {
     targetCard.toggleStar()
+    cards[i].saveToStorage()
   }
 }
 
@@ -97,11 +99,29 @@ function checkStarred(card) {
 
 function loadFromStorage() {
   for (var i=0; i < localStorage.length; i++) {
-    cards.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
+    //This line below (122 rn) is pretty dense.
+    //I recommend reading it backwards, starting from localStorage.key(i).
+    //If we move loadIdea to a method I think the changes we will make here will make it easier to understand.
+    cards.push(loadIdea(JSON.parse(localStorage.getItem(localStorage.key(i)))))
   }
   displayCards(cards)
 }
 
+
+
+//This function populates a new object with the same info that we have in storage.
+//It gets called in loadFromStorage.
+//It could work as a method, if we made the new Idea inside loadFromStorage, and then called it.
+function loadIdea(dataObject) {
+  var idea = new Idea()
+  idea.id = dataObject.id
+  idea.title = dataObject.title
+  idea.body = dataObject.body
+  idea.star = dataObject.star
+
+  return idea
+}
+  
 //this looks for events on the star bar and runs the appropriate functions, then updates the display
 function runStarBar(event) {
   var targetClass = event.target.classList
