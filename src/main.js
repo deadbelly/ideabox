@@ -11,6 +11,7 @@ titleInput.addEventListener('keyup', enableSave)
 bodyInput.addEventListener('keyup', enableSave)
 ideasGrid.addEventListener('click', deleteCard)
 ideasGrid.addEventListener('click', starFavorite)
+window.addEventListener('load', loadFromStorage)
 
 // variables
 
@@ -26,6 +27,7 @@ function saveCard(event) {
   titleInput.value = ''
   bodyInput.value = ''
   enableSave()
+  newIdea.saveToStorage()
 }
 
 function isInput() {
@@ -76,6 +78,8 @@ function deleteCard(event) {
     var idToDelete = event.target.closest('.idea').id
     for (var i = 0; i < cards.length; i++){
       if (cards[i].id == idToDelete) {
+        cards[i].deleteFromStorage()
+        console.log("hi")
         cards.splice(i, 1)
         break
       }
@@ -109,3 +113,12 @@ function checkStarred(card) {
       return 'starred'
   }
 }
+
+function loadFromStorage() {
+  for (var i=0; i < localStorage.length; i++) {
+    cards.push(localStorage.getItem(localStorage.key(i)))
+  }
+  displayCards(cards)
+}
+
+//
