@@ -78,8 +78,7 @@ function deleteCard(event) {
     var idToDelete = event.target.closest('.idea').id
     for (var i = 0; i < cards.length; i++){
       if (cards[i].id == idToDelete) {
-        // cards[i].deleteFromStorage()
-        console.log(cards[i])
+        cards[i].deleteFromStorage()
         cards.splice(i, 1)
         break
       }
@@ -99,6 +98,7 @@ function starFavorite() {
     for (var i = 0; i < cards.length; i++) {
       if (cards[i].id == idToStar) {
         cards[i].toggleStar()
+        cards[i].saveToStorage()
         break
       }
     }
@@ -116,9 +116,24 @@ function checkStarred(card) {
 
 function loadFromStorage() {
   for (var i=0; i < localStorage.length; i++) {
-    cards.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
+    //This line below (122 rn) is pretty dense.
+    //I recommend reading it backwards, starting from localStorage.key(i).
+    //If we move loadIdea to a method I think the changes we will make here will make it easier to understand.
+    cards.push(loadIdea(JSON.parse(localStorage.getItem(localStorage.key(i)))))
   }
   displayCards(cards)
 }
 
-//
+
+//This function populates a new object with the same info that we have in storage.
+//It gets called in loadFromStorage.
+//It could work as a method, if we made the new Idea inside loadFromStorage, and then called it.
+function loadIdea(dataObject) {
+  var idea = new Idea()
+  idea.id = dataObject.id
+  idea.title = dataObject.title
+  idea.body = dataObject.body
+  idea.star = dataObject.star
+
+  return idea
+}
