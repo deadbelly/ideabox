@@ -9,7 +9,9 @@ var ideasGrid = document.querySelector('.ideas-grid')
 saveButton.addEventListener('click', saveCard)
 titleInput.addEventListener('keyup', enableSave)
 bodyInput.addEventListener('keyup', enableSave)
+window.addEventListener('load', loadFromStorage)
 ideasGrid.addEventListener('click', runStarBar)
+
 
 // variables
 
@@ -25,6 +27,7 @@ function saveCard(event) {
   titleInput.value = ''
   bodyInput.value = ''
   enableSave()
+  newIdea.saveToStorage()
 }
 
 function isInput() {
@@ -70,10 +73,12 @@ function displayCards(cardArray) {
   }
 }
 
+
 //this checks if the event is targeting the delete button and deletes it if so.
 function deleteCard(elementClass, targetIndex) {
   if (elementClass == 'delete-icon-active') {
     cards.splice(targetIndex, 1)
+
   }
 }
 
@@ -88,6 +93,13 @@ function checkStarred(card) {
     if (card.star) {
       return 'starred'
   }
+}
+
+function loadFromStorage() {
+  for (var i=0; i < localStorage.length; i++) {
+    cards.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
+  }
+  displayCards(cards)
 }
 
 //this looks for events on the star bar and runs the appropriate functions, then updates the display
