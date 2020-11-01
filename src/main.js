@@ -78,7 +78,7 @@ function displayCards(cardArray) {
 //this checks if the event is targeting the delete button and deletes it if so.
 function deleteCard(elementClass, targetIndex) {
   if (elementClass == 'delete-icon-active') {
-    cards[i].deleteFromStorage()
+    cards[targetIndex].deleteFromStorage()
     cards.splice(targetIndex, 1)
   }
 }
@@ -87,7 +87,7 @@ function deleteCard(elementClass, targetIndex) {
 function starFavorite(elementClass, targetCard) {
   if (elementClass == 'star-icon-active') {
     targetCard.toggleStar()
-    cards[i].saveToStorage()
+    targetCard.saveToStorage()
   }
 }
 
@@ -121,7 +121,7 @@ function loadIdea(dataObject) {
 
   return idea
 }
-  
+
 //this looks for events on the star bar and runs the appropriate functions, then updates the display
 function runStarBar(event) {
   var targetClass = event.target.classList
