@@ -102,6 +102,16 @@ function loadFromStorage() {
     //This line below (122 rn) is pretty dense.
     //I recommend reading it backwards, starting from localStorage.key(i).
     //If we move loadIdea to a method I think the changes we will make here will make it easier to understand.
+
+  /*
+  localStorage holds an array of objects that have keys (properties and values) we want >>>>>> localStorage.key(i)
+  We go through the localStorage array of these objects >>>>> for... loop
+  and extract the key-pairs of each item >>>>>  localStorage.getItem()
+  We have to translate back into JS from JSON >>>>> JSON.parse
+  and we use the values returned to call a helper function which creates a new Idea (line 124) >>>>> loadIdea()
+  it takes each of those values we accessed (line 107) and assigns them to the properties of our new Class instantiation (line 126-130)
+  then we push that fully re-Classified (it's back to having methods) Idea object into the cards array again >>>>> cards.push()
+*/
     cards.push(loadIdea(JSON.parse(localStorage.getItem(localStorage.key(i)))))
   }
   displayCards(cards)
