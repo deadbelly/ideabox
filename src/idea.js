@@ -5,6 +5,7 @@ class Idea {
     this.body = body
     this.star = false
     this.containsSearch = false
+    this.comments = []
   }
 
   saveToStorage() {

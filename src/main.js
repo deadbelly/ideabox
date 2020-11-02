@@ -10,6 +10,11 @@ var searchButton = document.querySelector('.search-button')
 var searchBar = document.querySelector('.search-bar')
 var ideasGrid = document.querySelector('.ideas-grid')
 var filterMessage = document.querySelector('h2')
+var addCommentButton = document.querySelector('.add-comment-button')
+var form = document.querySelector('form')
+var sidebar = document.querySelector('.sidebar')
+var commentForm = document.querySelector('.comment-form')
+
 
 //event listeners
 window.addEventListener('load', loadFromStorage)
@@ -20,6 +25,7 @@ bodyInput.addEventListener('keyup', enableSave)
 searchButton.addEventListener('click', searchAndClear)
 searchBar.addEventListener('keyup', search)
 ideasGrid.addEventListener('click', runStarBar)
+
 
 
 //functions
@@ -33,6 +39,22 @@ if the button says 'Show All ideas' when clicked, it changes the button to say "
 it displays all the idea cards
 it clears the starredCards array so as to avoid duplication next time the starred button is clicked
 */
+
+function addComment(targetClass, idea) {
+  var commentButton = document.querySelector('.comment-button')
+  commentButton.addEventListener('click', addComment)
+  ideasGrid.classList.add('blur')
+  sidebar.classList.add('blur')
+
+  form.innerHTML =
+    `<div class="comment-form">
+      <textarea class="comment-form"></textarea>
+      <button class="add-comment-button">Add Comment</button>
+    </div>`
+
+  console.log('helllo')
+}
+
 function showStarredCards() {
   var starredCards = []
   if (showStarredButton.innerText === 'Show Starred Ideas') {
@@ -196,11 +218,12 @@ function loadIdea(dataObject) {
 function runStarBar(event) {
   var targetClass = event.target.classList
   var idToTarget = event.target.closest('.idea').id
-  if (targetClass === 'star-icon-active' || 'delete-icon-active') {
+  if (targetClass === 'star-icon-active' || 'delete-icon-active' || 'comment-button') {
     for (var i = 0; i < cards.length; i++) {
       if (cards[i].id == idToTarget) {
         starFavorite(targetClass, cards[i])
         deleteCard(targetClass, i)
+        addComment(targetClass, cards[i])
       }
     }
   }
