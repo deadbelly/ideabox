@@ -176,6 +176,7 @@ function openCommentForm(elementClass, idea) {
       idea.addComment(commentInput.value)
       clear(commentInput)
       enableButton(addCommentButton, commentInput.value)
+      idea.saveToStorage()
     })
   }
 }

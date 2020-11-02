@@ -77,10 +77,6 @@ class Idea {
     this.comments.push(new Comment(this.id, content))
   }
 
-  // storeComments() {
-  //   JSON.stringify(this.comments)
-  // }
-
   countComments() {
     if (this.comments) {
       return `Comments (${this.comments.length})`
