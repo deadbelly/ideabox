@@ -9,6 +9,7 @@ var saveButton = document.querySelector('.save-button')
 var searchButton = document.querySelector('.search-button')
 var searchBar = document.querySelector('.search-bar')
 var ideasGrid = document.querySelector('.ideas-grid')
+var filterMessage = document.querySelector('h2')
 
 //event listeners
 window.addEventListener('load', loadFromStorage)
@@ -35,18 +36,24 @@ it clears the starredCards array so as to avoid duplication next time the starre
 function showStarredCards() {
   var starredCards = []
   if (showStarredButton.innerText === 'Show Starred Ideas') {
-    showStarredButton.innerText = 'Show All Ideas'
     for (var i = 0; i < cards.length; i++) {
       if (cards[i].star) {
         starredCards.push(cards[i])
       }
     }
     displayCards(starredCards)
+    filterMessage.innerText = 'Your Starred Ideas'
+    showStarredButton.innerText = 'Show All Ideas'
   } else {
-    showStarredButton.innerText = 'Show Starred Ideas'
+    resetShowStarredButton()
     displayCards(cards)
-    starredCards = []
   }
+}
+
+function resetShowStarredButton() {
+  filterMessage.innerText = 'All Your Ideas'
+  showStarredButton.innerText = 'Show Starred Ideas'
+  starredCards = []
 }
 
 /*
