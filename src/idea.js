@@ -5,6 +5,7 @@ class Idea {
     this.body = body
     this.star = false
     this.containsSearch = false
+    this.comments = []
   }
 
   saveToStorage() {
@@ -66,10 +67,17 @@ class Idea {
           <button name="comment-button" class="comment-button">
             <img class="comment-icon" src="assets/comment.svg" alt="adding plus">
           </button>
-          <label for="comment-button">Comment</label>
+          <label for="comment-button">${this.countComments()}</label>
         </span>
       </div>`
       return cardHTML
   }
 
+  countComments() {
+    if (this.comments) {
+      return `Comments (${this.comments.length})`
+    } else {
+      return `Comment`
+    }
+  }
 }

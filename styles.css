@@ -260,3 +260,34 @@ p {
 .comment-icon {
   height: 3.5vmin;
 }
+
+/* Comment pop up */
+
+.hidden {
+  display: none;
+}
+
+.blur {
+  opacity: 50%;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 50%;
+  width: 100%;
+}
+
+.add-comment-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #5356A4;
+  border: .3vmin solid #353567;
+  border-radius: 2%;
+  color: #E9E9F3;
+  font-size: 2.1vmin;
+  font-weight: bold;
+  height: 2.3em;
+}

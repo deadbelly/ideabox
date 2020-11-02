@@ -9,6 +9,11 @@ var saveButton = document.querySelector('.save-button')
 var searchButton = document.querySelector('.search-button')
 var searchBar = document.querySelector('.search-bar')
 var ideasGrid = document.querySelector('.ideas-grid')
+var filterMessage = document.querySelector('h2')
+var form = document.querySelector('form')
+var sidebar = document.querySelector('.sidebar')
+
+
 
 //event listeners
 window.addEventListener('load', loadFromStorage)
@@ -19,6 +24,7 @@ bodyInput.addEventListener('keyup', enableSave)
 searchButton.addEventListener('click', searchAndClear)
 searchBar.addEventListener('keyup', search)
 ideasGrid.addEventListener('click', runStarBar)
+
 
 
 //functions
@@ -32,21 +38,68 @@ if the button says 'Show All ideas' when clicked, it changes the button to say "
 it displays all the idea cards
 it clears the starredCards array so as to avoid duplication next time the starred button is clicked
 */
+
+function openCommentForm(elementClass, idea) {
+  // check if user is clicking comment
+    console.log(idea)
+  if (elementClass == 'comment-icon') {
+    console.log("debug2")
+    ideasGrid.classList.add('blur')
+    sidebar.classList.add('blur')
+  form.innerHTML =
+    `<div class="comment-form">
+      <textarea class="comment-form"></textarea>
+      <button class="add-comment-button">Add Comment</button>
+    </div>`
+    var addCommentButton = document.querySelector('.add-comment-button')
+
+    addCommentButton.addEventListener('click',
+
+      function (idea) {
+        console.log(idea)
+        event.preventDefault()
+        var commentForm = document.querySelector('.comment-form')
+        // enableSave(addCommentButton, commentForm.value)
+        var newComment = new Comment(idea, commentForm.value)
+        idea.comments.push(newComment)
+        clear(commentForm)
+      }
+    )
+  }
+}
+
+function addComment(idea) {
+  console.log(idea)
+  event.preventDefault()
+  var commentForm = document.querySelector('.comment-form')
+  // enableSave(addCommentButton, commentForm.value)
+  var newComment = new Comment(idea, commentForm.value)
+  idea[comments].push(newComment)
+  clear(commentForm)
+}
+
+
 function showStarredCards() {
   var starredCards = []
   if (showStarredButton.innerText === 'Show Starred Ideas') {
-    showStarredButton.innerText = 'Show All Ideas'
     for (var i = 0; i < cards.length; i++) {
       if (cards[i].star) {
         starredCards.push(cards[i])
       }
     }
     displayCards(starredCards)
+    filterMessage.innerText = 'Your Starred Ideas'
+    showStarredButton.innerText = 'Show All Ideas'
   } else {
-    showStarredButton.innerText = 'Show Starred Ideas'
+    resetShowStarredButton()
     displayCards(cards)
-    starredCards = []
   }
+}
+
+function resetShowStarredButton() {
+  filterMessage.innerText = 'All Your Ideas'
+  showStarredButton.innerText = 'Show Starred Ideas'
+  starredCards = []
 }
 
 /*
@@ -65,21 +118,17 @@ If you do a search and then delete and do another, nothing happens.
 */
 function search(event) {
   event.preventDefault()
+  resetShowStarredButton()
   var searchResults = []
-
   var userSearch = searchBar.value
-// console.log('Search input:', userSearch, 'Results Array:', searchResults)
-// debugger
   for (var i = 0; i < cards.length; i++) {
     cards[i].checkIfContains(userSearch)
     if (cards[i].containsSearch) {
       searchResults.push(cards[i])
     }
   }
-
   displayCards(searchResults)
   clearResults(searchResults)
-  // searchResults = []
 }
 
 function clearResults(resultsArray) {
@@ -109,6 +158,7 @@ function clear(formInput) {
 
 function saveCard(event) {
   event.preventDefault()
+  resetShowStarredButton()
   var newIdea = new Idea(titleInput.value, bodyInput.value)
   cards.push(newIdea)
   displayCards(cards)
@@ -192,11 +242,12 @@ function loadIdea(dataObject) {
 function runStarBar(event) {
   var targetClass = event.target.classList
   var idToTarget = event.target.closest('.idea').id
-  if (targetClass === 'star-icon-active' || 'delete-icon-active') {
+  if (targetClass === 'star-icon-active' || 'delete-icon-active' || 'comment-button') {
     for (var i = 0; i < cards.length; i++) {
       if (cards[i].id == idToTarget) {
         starFavorite(targetClass, cards[i])
         deleteCard(targetClass, i)
+        openCommentForm(targetClass, cards[i])
       }
     }
   }
