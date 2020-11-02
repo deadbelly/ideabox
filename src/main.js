@@ -72,21 +72,17 @@ If you do a search and then delete and do another, nothing happens.
 */
 function search(event) {
   event.preventDefault()
+  resetShowStarredButton()
   var searchResults = []
-
   var userSearch = searchBar.value
-// console.log('Search input:', userSearch, 'Results Array:', searchResults)
-// debugger
   for (var i = 0; i < cards.length; i++) {
     cards[i].checkIfContains(userSearch)
     if (cards[i].containsSearch) {
       searchResults.push(cards[i])
     }
   }
-
   displayCards(searchResults)
   clearResults(searchResults)
-  // searchResults = []
 }
 
 function clearResults(resultsArray) {
@@ -116,6 +112,7 @@ function clear(formInput) {
 
 function saveCard(event) {
   event.preventDefault()
+  resetShowStarredButton()
   var newIdea = new Idea(titleInput.value, bodyInput.value)
   cards.push(newIdea)
   displayCards(cards)
