@@ -165,18 +165,16 @@ function openCommentForm(elementClass, idea) {
     sidebar.classList.add('blur')
     form.innerHTML =
     `<div class="comment-form">
-      <textarea class="comment-form"></textarea>
+      <textarea class="comment-input"></textarea>
       <button class="add-comment-button">Add Comment</button>
     </div>`
     var addCommentButton = document.querySelector('.add-comment-button')
     addCommentButton.addEventListener('click', function () {
-        console.log(idea)
         event.preventDefault()
-        var commentForm = document.querySelector('.comment-form')
+        var commentForm = document.querySelector('.comment-input')
         // enableSave(addCommentButton, commentForm.value)
         var newComment = new Comment(idea, commentForm.value)
         idea.comments.push(newComment)
-        console.log(idea.comments)
         clear(commentForm)
       }
     )
