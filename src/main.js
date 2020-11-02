@@ -17,8 +17,12 @@ var sidebar = document.querySelector('.sidebar')
 window.addEventListener('load', loadFromStorage)
 showStarredButton.addEventListener('click', showStarredCards)
 saveButton.addEventListener('click', saveCard)
-titleInput.addEventListener('keyup', enableSave)
-bodyInput.addEventListener('keyup', enableSave)
+titleInput.addEventListener('keyup', function() {
+  enableButton(saveButton, (titleInput.value && bodyInput.value))
+})
+bodyInput.addEventListener('keyup', function() {
+  enableButton(saveButton, (titleInput.value && bodyInput.value))
+})
 searchBar.addEventListener('keyup', search)
 ideasGrid.addEventListener('click', runStarBar)
 
@@ -31,7 +35,7 @@ function saveCard(event) {
   displayCards(cards)
   clear(titleInput)
   clear(bodyInput)
-  enableSave()
+  enableButton(saveButton, (titleInput.value && bodyInput.value))
   newIdea.saveToStorage()
 }
 
@@ -42,19 +46,19 @@ function displayCards(cardArray) {
   }
 }
 
-function enableSave() {
-  if (isInput()) {
-    saveButton.disabled = false
+function enableButton(button, inputCheck) {
+  if (inputCheck) {
+    button.disabled = false
   } else {
-    saveButton.disabled = true
+    button.disabled = true
   }
 }
 
-function isInput() {
-  if (titleInput.value && bodyInput.value) {
-    return true
-  }
-}
+// function isInput() {
+//   if (titleInput.value && bodyInput.value) {
+//     return true
+//   }
+// }
 
 function clear(formInput) {
   formInput.value = ''
@@ -163,12 +167,15 @@ function openCommentForm(elementClass, idea) {
   if (elementClass == 'comment-icon') {
     formatCommentForm()
     var addCommentButton = document.querySelector('.add-comment-button')
+    var commentInput = document.querySelector('.comment-input')
+    commentInput.addEventListener('keyup', function() {
+      enableButton(addCommentButton, commentInput.value)
+    })
     addCommentButton.addEventListener('click', function(){
       event.preventDefault()
-      var commentForm = document.querySelector('.comment-input')
-      // enableSave(addCommentButton, commentForm.value)
-      idea.addComment(commentForm.value)
-      clear(commentForm)
+      idea.addComment(commentInput.value)
+      clear(commentInput)
+      enableButton(addCommentButton, commentInput.value)
     })
   }
 }
@@ -179,6 +186,6 @@ function formatCommentForm() {
   form.innerHTML =
   `<div class="comment-form">
     <textarea class="comment-input"></textarea>
-    <button class="add-comment-button">Add Comment</button>
+    <button class="add-comment-button" disabled="true">Add Comment</button>
   </div>`
 }
