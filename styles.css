@@ -74,14 +74,9 @@ form {
   width: 40%;
 }
 
-textarea {
-  padding: none;
-  resize: none;
-}
-
 .form-item {
-  border: 2px solid #353567;
-  border-radius: 5%;
+  border: 2px solid #5356A4;
+  border-radius: 2%;
   font-size: 2.1vmin;
   width: 100%
 }
@@ -111,17 +106,35 @@ label {
 
 .search-line {
   display: flex;
+  flex-direction: row;
   width: 100%;
 }
 
 .search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #353567;
-  border: none;
-  width: 10%;
+  border-color: #5356A4;
+  border-right: none;
+  width: 15%;
 }
 
-.seach-bar {
+.search-bar {
+  height: 2.3em;
   font-size: 1.6vmin !important;
+}
+
+.title-input {
+  height: 2.3em;
+}
+
+.body-input {
+  height: 3.0em;
+}
+
+.search-icon {
+  height: 2.5vmin;
 }
 
 /* CARD AREA */
@@ -150,9 +163,12 @@ label {
   display: flex;
   justify-content: space-between;
   border: 2px solid #1F1F3D;
+  height: 1.5em;
 }
 
 .fave-button {
+ display: flex;
+ flex-direction: row;
  background-color: transparent;
  border: none;
 }
@@ -212,6 +228,7 @@ h3 {
   background-color: #5356A4;
   color: white;
   border: 2px solid #1F1F3D;
+  height: 1.5em;
 }
 
 .comment-button {
