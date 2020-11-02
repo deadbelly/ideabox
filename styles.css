@@ -26,13 +26,15 @@ main {
 h1 {
   font-size: 2.1vmin;
 }
+
 .sidebar-item {
   margin-top: 6%;
   margin-left: 6%;
 }
+
 .divider {
   background-color: #353567;
-  height: 2px;
+  height: .3vmin;
   margin-top: 6%;
 }
 
@@ -42,9 +44,12 @@ h2 {
 }
 
 .show-starred-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #5356A4;
-  border: 2px solid #353567;
-  border-radius: 5%;
+  border: .3vmin solid #353567;
+  border-radius: 2%;
   color: #E9E9F3;
   font-size: 2.1vmin;
   font-weight: bold;
@@ -74,14 +79,9 @@ form {
   width: 40%;
 }
 
-textarea {
-  padding: none;
-  resize: none;
-}
-
 .form-item {
-  border: 2px solid #353567;
-  border-radius: 5%;
+  border: .vmin solid #5356A4;
+  border-radius: 2%;
   font-size: 2.1vmin;
   width: 100%
 }
@@ -111,17 +111,35 @@ label {
 
 .search-line {
   display: flex;
+  flex-direction: row;
   width: 100%;
 }
 
 .search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #353567;
-  border: none;
-  width: 10%;
+  border-color: #5356A4;
+  border-right: none;
+  width: 15%;
 }
 
-.seach-bar {
+.search-bar {
+  height: 2.3em;
   font-size: 1.6vmin !important;
+}
+
+.title-input {
+  height: 2.3em;
+}
+
+.body-input {
+  height: 3.0em;
+}
+
+.search-icon {
+  height: 2.5vmin;
 }
 
 /* CARD AREA */
@@ -132,7 +150,7 @@ label {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  padding: 1.5%;
+  padding: 0;
 
 }
 
@@ -141,18 +159,21 @@ label {
   flex-direction: column;
   width: 30%;
   margin: 1.5%;
-
 }
 
 .star-bar {
   background-color: #1F1F3D;
   opacity: 100%;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  border: 2px solid #1F1F3D;
+  border: .3vmin solid #1F1F3D;
+  height: 1.5em;
 }
 
 .fave-button {
+ display: flex;
+ flex-direction: row;
  background-color: transparent;
  border: none;
 }
@@ -199,31 +220,43 @@ label {
   color: #1F1F3D;
   height: 8em;
   font-size: 2.1vmin;
-  padding: 7%;
-  border-right: 2px solid #1F1F3D;
-  border-left: 2px solid #1F1F3D;
+  padding: 5%;
+  border-right: .3vmin solid #1F1F3D;
+  border-left: .3vmin solid #1F1F3D;
 }
 
 h3 {
   font-size: 2.1vmin;
 }
 
+p {
+  padding-top: 5%;
+}
+
 .comment-bar {
+  display: flex;
+  align-items: center;
   background-color: #5356A4;
   color: white;
-  border: 2px solid #1F1F3D;
+  border: .3vmin solid #1F1F3D;
+  height: 1.5em;
 }
 
 .comment-button {
+  display: flex;
+  width: 2.7em;
   background-color: transparent;
   border: none;
+  padding: 0;
 }
 
-/* .hidden {
-  display: none;
-} */
+.star-icon,
+.star-icon-active,
+.delete-icon,
+.delete-icon-active {
+  height: 2.8vmin;
+}
 
-img {
-  height: 20px;
-  width: 20px;
+.comment-icon {
+  height: 3.5vmin;
 }
