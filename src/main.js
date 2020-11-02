@@ -10,7 +10,6 @@ var searchButton = document.querySelector('.search-button')
 var searchBar = document.querySelector('.search-bar')
 var ideasGrid = document.querySelector('.ideas-grid')
 var filterMessage = document.querySelector('h2')
-var addCommentButton = document.querySelector('.add-comment-button')
 var form = document.querySelector('form')
 var sidebar = document.querySelector('.sidebar')
 var commentForm = document.querySelector('.comment-form')
@@ -40,20 +39,33 @@ it displays all the idea cards
 it clears the starredCards array so as to avoid duplication next time the starred button is clicked
 */
 
-function addComment(targetClass, idea) {
-  var commentButton = document.querySelector('.comment-button')
-  commentButton.addEventListener('click', addComment)
-  ideasGrid.classList.add('blur')
-  sidebar.classList.add('blur')
-
+function openCommentForm(elementClass, idea) {
+  // check if user is clicking comment
+  console.log("debug")
+  console.log(elementClass)
+  if (elementClass == 'comment-icon') {
+    console.log("debug2")
+    var commentButton = document.querySelector('.comment-button')
+    commentButton.addEventListener('click', addComment)
+    ideasGrid.classList.add('blur')
+    sidebar.classList.add('blur')
   form.innerHTML =
     `<div class="comment-form">
       <textarea class="comment-form"></textarea>
-      <button class="add-comment-button">Add Comment</button>
+      <button class="add-comment-button" disabled="true">Add Comment</button>
     </div>`
-
-  console.log('helllo')
+  }
 }
+
+function addComment(idea) {
+  var addCommentButton = document.querySelector('.add-comment-button')
+  var commentForm = document.querySelector('.comment-form')
+  var newComment = new Comment(idea, commentForm.value)
+  idea.comments.push(newComment)
+  enableSave(addCommentButton, commentForm.value)
+  clear(commentForm)
+}
+
 
 function showStarredCards() {
   var starredCards = []
@@ -140,15 +152,15 @@ function saveCard(event) {
   displayCards(cards)
   clear(titleInput)
   clear(bodyInput)
-  enableSave()
+  enableSave(saveButton, isInput)
   newIdea.saveToStorage()
 }
 
-function enableSave() {
-  if (isInput()) {
-    saveButton.disabled = false
+function enableSave(button, inputCheck) {
+  if (inputCheck) {
+    button.disabled = false
   } else {
-    saveButton.disabled = true
+    button.disabled = true
   }
 }
 
@@ -223,7 +235,7 @@ function runStarBar(event) {
       if (cards[i].id == idToTarget) {
         starFavorite(targetClass, cards[i])
         deleteCard(targetClass, i)
-        addComment(targetClass, cards[i])
+        openCommentForm(targetClass, cards[i])
       }
     }
   }
