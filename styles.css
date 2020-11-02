@@ -48,7 +48,7 @@ h2 {
   align-items: center;
   justify-content: center;
   background-color: #5356A4;
-  border: .35vmin solid #353567;
+  border: .3vmin solid #353567;
   border-radius: 2%;
   color: #E9E9F3;
   font-size: 2.1vmin;
@@ -80,7 +80,7 @@ form {
 }
 
 .form-item {
-  border: .35vmin solid #5356A4;
+  border: .vmin solid #5356A4;
   border-radius: 2%;
   font-size: 2.1vmin;
   width: 100%
@@ -150,7 +150,7 @@ label {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  padding: 1.5%;
+  padding: 0;
 
 }
 
@@ -167,7 +167,7 @@ label {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: .35vmin solid #1F1F3D;
+  border: .3vmin solid #1F1F3D;
   height: 1.5em;
 }
 
@@ -221,8 +221,8 @@ label {
   height: 8em;
   font-size: 2.1vmin;
   padding: 5%;
-  border-right: .35vmin solid #1F1F3D;
-  border-left: .35vmin solid #1F1F3D;
+  border-right: .3vmin solid #1F1F3D;
+  border-left: .3vmin solid #1F1F3D;
 }
 
 h3 {
@@ -238,9 +238,8 @@ p {
   align-items: center;
   background-color: #5356A4;
   color: white;
-  border: .35vmin solid #1F1F3D;
+  border: .3vmin solid #1F1F3D;
   height: 1.5em;
-
 }
 
 .comment-button {
@@ -248,7 +247,7 @@ p {
   width: 2.7em;
   background-color: transparent;
   border: none;
-  padding-left: 0;
+  padding: 0;
 }
 
 .star-icon,
