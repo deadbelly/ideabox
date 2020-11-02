@@ -84,7 +84,7 @@ function search(event) {
 
 function clearResults(resultsArray) {
   for (var i = 0; i < resultsArray.length; i++) {
-    resultsArray[i].contains = false
+    resultsArray[i].containsSearch = false
   }
 }
 
