@@ -1,7 +1,7 @@
 class Comment {
-  constructor(idea, content) {
+  constructor(ideaId, content) {
     this.id = Date.now()
-    this.ideaId = idea.id
+    this.ideaId = ideaId
     this.content = content
   }
 

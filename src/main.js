@@ -161,32 +161,24 @@ function clearResults(resultsArray) {
 
 function openCommentForm(elementClass, idea) {
   if (elementClass == 'comment-icon') {
-    ideasGrid.classList.add('blur')
-    sidebar.classList.add('blur')
-    form.innerHTML =
-    `<div class="comment-form">
-      <textarea class="comment-input"></textarea>
-      <button class="add-comment-button">Add Comment</button>
-    </div>`
+    formatCommentForm()
     var addCommentButton = document.querySelector('.add-comment-button')
-    addCommentButton.addEventListener('click', function () {
-        event.preventDefault()
-        var commentForm = document.querySelector('.comment-input')
-        // enableSave(addCommentButton, commentForm.value)
-        var newComment = new Comment(idea, commentForm.value)
-        idea.comments.push(newComment)
-        clear(commentForm)
-      }
-    )
+    addCommentButton.addEventListener('click', function(){
+      event.preventDefault()
+      var commentForm = document.querySelector('.comment-input')
+      // enableSave(addCommentButton, commentForm.value)
+      idea.addComment(commentForm.value)
+      clear(commentForm)
+    })
   }
 }
 
-function addComment(idea) {
-  console.log(idea)
-  event.preventDefault()
-  var commentForm = document.querySelector('.comment-form')
-  // enableSave(addCommentButton, commentForm.value)
-  var newComment = new Comment(idea, commentForm.value)
-  idea[comments].push(newComment)
-  clear(commentForm)
+function formatCommentForm() {
+  ideasGrid.classList.add('blur')
+  sidebar.classList.add('blur')
+  form.innerHTML =
+  `<div class="comment-form">
+    <textarea class="comment-input"></textarea>
+    <button class="add-comment-button">Add Comment</button>
+  </div>`
 }
