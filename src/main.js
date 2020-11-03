@@ -61,12 +61,6 @@ function enableButton(button, inputCheck) {
   }
 }
 
-// function isInput() {
-//   if (titleInput.value && bodyInput.value) {
-//     return true
-//   }
-// }
-
 function clear(formInput) {
   formInput.value = ''
 }
@@ -102,8 +96,9 @@ function findTargetCard(idToTarget) {
 
 function assignIdeaTask(event) {
   var targetClass = event.target.classList
-  var idToTarget = event.target.closest('.idea').id
-  var targetCard = findTargetCard(idToTarget)
+  var targetIdea = event.target.closest('.idea')
+  // var idToTarget = event.target.closest('.idea').id
+  var targetCard = findTargetCard(targetIdea.id)
 
   if (targetClass == 'star-icon-active') {
       starFavorite(targetClass, targetCard)
@@ -112,12 +107,11 @@ function assignIdeaTask(event) {
     var index = cards.indexOf(targetCard)
     deleteCard(targetClass, index)
 
-  } else if (targetClass == 'comment-button') {
+  } else if (targetClass == 'comment-icon') {
     openCommentForm(targetClass, targetCard)
 
   } else if (targetClass != 'ideas-grid') {
-    console.log('HELLO BOONE')
-    //run the stuff to highlight and display the stuff
+    displayCommentsForIdea(targetIdea, targetCard)
 
   }
 
@@ -219,6 +213,6 @@ function formToggle() {
 }
 
 function displayCommentsForIdea(targetClass, idea) {
-  idea.classList.toggle('selected')
+  targetClass.classList.toggle('selected')
   displayComments(idea)
 }

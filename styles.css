@@ -220,6 +220,10 @@ label {
   display: inline;
 }
 
+.selected {
+  border: .3vmin solid red;
+}
+
 .card-body {
   background-color: #FFFFFF;
   color: #1F1F3D;
