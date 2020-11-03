@@ -73,6 +73,10 @@ class Idea {
       return cardHTML
   }
 
+  addComment(content) {
+    this.comments.push(new Comment(this.id, content))
+  }
+
   countComments() {
     if (this.comments) {
       return `Comments (${this.comments.length})`
