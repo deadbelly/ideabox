@@ -36,13 +36,13 @@ commentInput.addEventListener('keyup', function() {
 //functions
 function saveCard(event) {
   event.preventDefault()
+  enableButton(saveButton, (titleInput.value && bodyInput.value))
   resetShowStarredButton()
   var newIdea = new Idea(titleInput.value, bodyInput.value)
   cards.push(newIdea)
   displayCards(cards)
   clear(titleInput)
   clear(bodyInput)
-  enableButton(saveButton, (titleInput.value && bodyInput.value))
   newIdea.saveToStorage()
 }
 
@@ -71,18 +71,35 @@ function loadFromStorage() {
   var newIdeaInstantiation
   for (var i=0; i < localStorage.length; i++) {
     storedObject = JSON.parse(localStorage.getItem(localStorage.key(i)))
-    newIdeaInstance = loadIdea(storedObject)
+    newCommentArray = loadComment(storedObject)
+      console.log(newCommentArray)
+    newIdeaInstance = loadIdea(storedObject, newCommentArray)
     cards.push(newIdeaInstance)
   }
   displayCards(cards)
 }
 
-function loadIdea(dataObject) {
+function loadComment(storedObject) {
+  var commentArray = []
+  for (var i = 0; i < storedObject.comments.length; i++) {
+    var comment = new Comment()
+
+    comment.id = storedObject.comments[i].id
+    comment.ideaId = storedObject.comments[i].ideaId
+    comment.content = storedObject.comments[i].content
+
+    commentArray.push(comment)
+  }
+  return commentArray
+}
+
+function loadIdea(dataObject, newCommentArray) {
   var idea = new Idea()
   idea.id = dataObject.id
   idea.title = dataObject.title
   idea.body = dataObject.body
   idea.star = dataObject.star
+  idea.comments = newCommentArray;
 
   return idea
 }
@@ -102,14 +119,14 @@ function assignIdeaTask(event) {
   var targetCard = findTargetCard(targetIdea.id)
 
   if (targetClass == 'star-icon-active') {
-      starFavorite(targetClass, targetCard)
+      starFavorite(targetCard)
 
   } else if ( targetClass == 'delete-icon-active' ) {
     var index = cards.indexOf(targetCard)
-    deleteCard(targetClass, index)
+    deleteCard(index)
 
   } else if (targetClass == 'comment-icon') {
-    openCommentForm(targetClass, targetCard)
+    openCommentForm(targetCard)
 
   } else if (targetClass != 'ideas-grid') {
     displayCommentsForIdea(targetIdea, targetCard)
@@ -119,12 +136,12 @@ function assignIdeaTask(event) {
   displayCards(cards)
 }
 
-function starFavorite(elementClass, targetCard) {
+function starFavorite(targetCard) {
   targetCard.toggleStar()
   targetCard.saveToStorage()
 }
 
-function deleteCard(elementClass, targetIndex) {
+function deleteCard(targetIndex) {
   cards[targetIndex].deleteFromStorage()
   cards.splice(targetIndex, 1)
 }
@@ -149,7 +166,7 @@ function showStarredCards() {
 function resetShowStarredButton() {
   filterMessage.innerText = 'All Your Ideas'
   showStarredButton.innerText = 'Show Starred Ideas'
-  starredCards = []
+
 }
 
 function search(event) {
@@ -178,7 +195,7 @@ function clearResults(resultsArray) {
 
 
 
-function openCommentForm(elementClass, idea) {
+function openCommentForm(idea) {
   formatCommentForm()
 
   function addComment() {
@@ -194,6 +211,7 @@ function openCommentForm(elementClass, idea) {
 }
 
 function displayComments(idea) {
+  debugger
   commentDisplay.innerHTML = ''
   for (var i = 0; i < idea.comments.length; i++) {
     commentDisplay.innerHTML += idea.comments[i].formatComment()
