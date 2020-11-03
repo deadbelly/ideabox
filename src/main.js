@@ -12,6 +12,9 @@ var ideasGrid = document.querySelector('.ideas-grid')
 var filterMessage = document.querySelector('h2')
 var form = document.querySelector('form')
 var sidebar = document.querySelector('.sidebar')
+var addCommentButton = document.querySelector('.add-comment-button')
+var commentInput = document.querySelector('.comment-input')
+
 
 //event listeners
 window.addEventListener('load', loadFromStorage)
@@ -25,6 +28,10 @@ bodyInput.addEventListener('keyup', function() {
 })
 searchBar.addEventListener('keyup', search)
 ideasGrid.addEventListener('click', runStarBar)
+commentInput.addEventListener('keyup', function() {
+  enableButton(addCommentButton, commentInput.value)
+})
+
 
 //functions
 function saveCard(event) {
@@ -166,11 +173,6 @@ function clearResults(resultsArray) {
 function openCommentForm(elementClass, idea) {
   if (elementClass == 'comment-icon') {
     formatCommentForm()
-    var addCommentButton = document.querySelector('.add-comment-button')
-    var commentInput = document.querySelector('.comment-input')
-    commentInput.addEventListener('keyup', function() {
-      enableButton(addCommentButton, commentInput.value)
-    })
     addCommentButton.addEventListener('click', function(){
       event.preventDefault()
       idea.addComment(commentInput.value)
@@ -184,9 +186,12 @@ function openCommentForm(elementClass, idea) {
 function formatCommentForm() {
   ideasGrid.classList.add('blur')
   sidebar.classList.add('blur')
-  form.innerHTML =
-  `<div class="comment-form">
-    <textarea class="comment-input"></textarea>
-    <button class="add-comment-button" disabled="true">Add Comment</button>
-  </div>`
+  formToggle()
+}
+
+function formToggle() {
+  var formEles = document.querySelectorAll('.form-ele')
+  for (var i = 0; i < formEles.length; i++) {
+    formEles[i].classList.toggle('hidden')
+  }
 }
