@@ -211,7 +211,6 @@ function openCommentForm(idea) {
 }
 
 function displayComments(idea) {
-  debugger
   commentDisplay.innerHTML = ''
   for (var i = 0; i < idea.comments.length; i++) {
     commentDisplay.innerHTML += idea.comments[i].formatComment()

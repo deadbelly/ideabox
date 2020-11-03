@@ -20,12 +20,12 @@ class Comment {
   formatComment() {
     var commentHTML =
       `<div class="comment" id="${this.id}">
-        <span class="star-bar">
-          <button class="delete-button">
+        <div class="display-comment-bar">
+          <button class="delete-comment-button">
            <img class="delete-icon" src="assets/delete.svg" alt="delete ex">
            <img class="delete-icon-active" src="assets/delete-active.svg" alt="delete ex">
          </button>
-        </span>
+        </div>
         <article class="comment-body">
           <p>${this.content}</p>
         </article>
