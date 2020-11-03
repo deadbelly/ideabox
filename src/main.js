@@ -27,7 +27,7 @@ bodyInput.addEventListener('keyup', function() {
   enableButton(saveButton, (titleInput.value && bodyInput.value))
 })
 searchBar.addEventListener('keyup', search)
-ideasGrid.addEventListener('click', runStarBar)
+ideasGrid.addEventListener('click', assignIdeaTask)
 commentInput.addEventListener('keyup', function() {
   enableButton(addCommentButton, commentInput.value)
 })
@@ -92,33 +92,46 @@ function loadIdea(dataObject) {
   return idea
 }
 
-function runStarBar(event) {
-  var targetClass = event.target.classList
-  var idToTarget = event.target.closest('.idea').id
-  if (targetClass === 'star-icon-active' || 'delete-icon-active' || 'comment-button') {
-    for (var i = 0; i < cards.length; i++) {
-      if (cards[i].id == idToTarget) {
-        starFavorite(targetClass, cards[i])
-        deleteCard(targetClass, i)
-        openCommentForm(targetClass, cards[i])
-      }
+function findTargetCard(idToTarget) {
+  for (var i = 0; i < cards.length; i++) {
+    if (cards[i].id == idToTarget) {
+      return cards[i]
     }
   }
+}
+
+function assignIdeaTask(event) {
+  var targetClass = event.target.classList
+  var idToTarget = event.target.closest('.idea').id
+  var targetCard = findTargetCard(idToTarget)
+
+  if (targetClass == 'star-icon-active') {
+      starFavorite(targetClass, targetCard)
+
+  } else if ( targetClass == 'delete-icon-active' ) {
+    var index = cards.indexOf(targetCard)
+    deleteCard(targetClass, index)
+
+  } else if (targetClass == 'comment-button') {
+    openCommentForm(targetClass, targetCard)
+
+  } else if (targetClass != 'ideas-grid') {
+    console.log('HELLO BOONE')
+    //run the stuff to highlight and display the stuff
+
+  }
+
   displayCards(cards)
 }
 
 function starFavorite(elementClass, targetCard) {
-  if (elementClass == 'star-icon-active') {
-    targetCard.toggleStar()
-    targetCard.saveToStorage()
-  }
+  targetCard.toggleStar()
+  targetCard.saveToStorage()
 }
 
 function deleteCard(elementClass, targetIndex) {
-  if (elementClass == 'delete-icon-active') {
-    cards[targetIndex].deleteFromStorage()
-    cards.splice(targetIndex, 1)
-  }
+  cards[targetIndex].deleteFromStorage()
+  cards.splice(targetIndex, 1)
 }
 
 function showStarredCards() {
@@ -171,20 +184,18 @@ function clearResults(resultsArray) {
 
 
 function openCommentForm(elementClass, idea) {
-  if (elementClass == 'comment-icon') {
-    formatCommentForm()
+  formatCommentForm()
 
-    function addComment() {
-      event.preventDefault()
-      enableButton(addCommentButton, commentInput.value)
-      idea.addComment(commentInput.value)
-      idea.saveToStorage()
-      displayComments(idea)
-      clear(commentInput)
-    }
-
-    addCommentButton.addEventListener('click', addComment)
+  function addComment() {
+    event.preventDefault()
+    enableButton(addCommentButton, commentInput.value)
+    idea.addComment(commentInput.value)
+    idea.saveToStorage()
+    displayComments(idea)
+    clear(commentInput)
   }
+
+  addCommentButton.addEventListener('click', addComment)
 }
 
 function displayComments(idea) {
@@ -205,4 +216,9 @@ function formToggle() {
   for (var i = 0; i < formEles.length; i++) {
     formEles[i].classList.toggle('hidden')
   }
+}
+
+function displayCommentsForIdea(targetClass, idea) {
+  idea.classList.toggle('selected')
+  displayComments(idea)
 }
