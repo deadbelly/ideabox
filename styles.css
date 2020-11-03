@@ -79,6 +79,11 @@ form {
   width: 40%;
 }
 
+textarea {
+  padding: none;
+  resize: none;
+}
+
 .form-item {
   border: .vmin solid #5356A4;
   border-radius: 2%;
