@@ -14,7 +14,7 @@ var form = document.querySelector('form')
 var sidebar = document.querySelector('.sidebar')
 var addCommentButton = document.querySelector('.add-comment-button')
 var commentInput = document.querySelector('.comment-input')
-
+var commentDisplay = document.querySelector('.comment-display')
 
 //event listeners
 window.addEventListener('load', loadFromStorage)
@@ -173,13 +173,24 @@ function clearResults(resultsArray) {
 function openCommentForm(elementClass, idea) {
   if (elementClass == 'comment-icon') {
     formatCommentForm()
-    addCommentButton.addEventListener('click', function(){
+
+    function addComment() {
       event.preventDefault()
-      idea.addComment(commentInput.value)
-      clear(commentInput)
       enableButton(addCommentButton, commentInput.value)
+      idea.addComment(commentInput.value)
       idea.saveToStorage()
-    })
+      displayComments(idea)
+      clear(commentInput)
+    }
+
+    addCommentButton.addEventListener('click', addComment)
+  }
+}
+
+function displayComments(idea) {
+  commentDisplay.innerHTML = ''
+  for (var i = 0; i < idea.comments.length; i++) {
+    commentDisplay.innerHTML += idea.comments[i].formatComment()
   }
 }
 
