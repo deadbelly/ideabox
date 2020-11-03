@@ -221,7 +221,7 @@ label {
 }
 
 .selected {
-  border: .3vmin solid red;
+  border: 5vmin solid red;
 }
 
 .card-body {

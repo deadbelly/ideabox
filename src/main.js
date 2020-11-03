@@ -49,6 +49,7 @@ function saveCard(event) {
 function displayCards(cardArray) {
   ideasGrid.innerHTML = ''
   for(var i = 0; i < cardArray.length; i ++) {
+    cardArray[i].countComments()
     ideasGrid.innerHTML += cardArray[i].formatCard()
   }
 }
@@ -213,6 +214,7 @@ function formToggle() {
 }
 
 function displayCommentsForIdea(targetClass, idea) {
+  console.log('Hi Rachel')
   targetClass.classList.toggle('selected')
   displayComments(idea)
 }
