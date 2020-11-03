@@ -306,3 +306,7 @@ p {
   color: #1F1F3D;
   cursor: not-allowed;
 }
+
+.hidden {
+  display: none!important;
+}

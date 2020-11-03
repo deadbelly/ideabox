@@ -19,16 +19,22 @@
     <div class="form-and-grid">
       <section class="input-form">
         <form>
-          <div>
+
+          <div class="comment-form hidden form-ele">
+            <textarea class="comment-input"></textarea>
+            <button class="add-comment-button" disabled="true">Add Comment</button>
+          </div>
+
+          <div class="form-ele">
             <label for="title-input">Title</label>
             <textarea name="title-input" class="title-input form-item"></textarea>
           </div>
-          <div>
+          <div class="form-ele">
             <label for="body-input">Body</label>
             <textarea name="body-input" class="body-input form-item"></textarea>
           </div>
-          <button class="save-button form-item" disabled="true">Save</button>
-        <div class="search-line">
+          <button class="save-button form-item form-ele" disabled="true">Save</button>
+        <div class="search-line form-ele">
           <button class="search-button">
              <img class="search-icon" src="assets/search.svg" alt="searching magnifying glass">
           </button>
