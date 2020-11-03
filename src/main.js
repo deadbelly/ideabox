@@ -12,6 +12,9 @@ var ideasGrid = document.querySelector('.ideas-grid')
 var filterMessage = document.querySelector('h2')
 var form = document.querySelector('form')
 var sidebar = document.querySelector('.sidebar')
+var addCommentButton = document.querySelector('.add-comment-button')
+var commentInput = document.querySelector('.comment-input')
+var commentDisplay = document.querySelector('.comment-display')
 
 //event listeners
 window.addEventListener('load', loadFromStorage)
@@ -24,24 +27,29 @@ bodyInput.addEventListener('keyup', function() {
   enableButton(saveButton, (titleInput.value && bodyInput.value))
 })
 searchBar.addEventListener('keyup', search)
-ideasGrid.addEventListener('click', runStarBar)
+ideasGrid.addEventListener('click', assignIdeaTask)
+commentInput.addEventListener('keyup', function() {
+  enableButton(addCommentButton, commentInput.value)
+})
+
 
 //functions
 function saveCard(event) {
   event.preventDefault()
+  enableButton(saveButton, (titleInput.value && bodyInput.value))
   resetShowStarredButton()
   var newIdea = new Idea(titleInput.value, bodyInput.value)
   cards.push(newIdea)
   displayCards(cards)
   clear(titleInput)
   clear(bodyInput)
-  enableButton(saveButton, (titleInput.value && bodyInput.value))
   newIdea.saveToStorage()
 }
 
 function displayCards(cardArray) {
   ideasGrid.innerHTML = ''
   for(var i = 0; i < cardArray.length; i ++) {
+    cardArray[i].countComments()
     ideasGrid.innerHTML += cardArray[i].formatCard()
   }
 }
@@ -54,12 +62,6 @@ function enableButton(button, inputCheck) {
   }
 }
 
-// function isInput() {
-//   if (titleInput.value && bodyInput.value) {
-//     return true
-//   }
-// }
-
 function clear(formInput) {
   formInput.value = ''
 }
@@ -69,49 +71,79 @@ function loadFromStorage() {
   var newIdeaInstantiation
   for (var i=0; i < localStorage.length; i++) {
     storedObject = JSON.parse(localStorage.getItem(localStorage.key(i)))
-    newIdeaInstance = loadIdea(storedObject)
+    newCommentArray = loadComment(storedObject)
+      console.log(newCommentArray)
+    newIdeaInstance = loadIdea(storedObject, newCommentArray)
     cards.push(newIdeaInstance)
   }
   displayCards(cards)
 }
 
-function loadIdea(dataObject) {
+function loadComment(storedObject) {
+  var commentArray = []
+  for (var i = 0; i < storedObject.comments.length; i++) {
+    var comment = new Comment()
+
+    comment.id = storedObject.comments[i].id
+    comment.ideaId = storedObject.comments[i].ideaId
+    comment.content = storedObject.comments[i].content
+
+    commentArray.push(comment)
+  }
+  return commentArray
+}
+
+function loadIdea(dataObject, newCommentArray) {
   var idea = new Idea()
   idea.id = dataObject.id
   idea.title = dataObject.title
   idea.body = dataObject.body
   idea.star = dataObject.star
+  idea.comments = newCommentArray;
 
   return idea
 }
 
-function runStarBar(event) {
-  var targetClass = event.target.classList
-  var idToTarget = event.target.closest('.idea').id
-  if (targetClass === 'star-icon-active' || 'delete-icon-active' || 'comment-button') {
-    for (var i = 0; i < cards.length; i++) {
-      if (cards[i].id == idToTarget) {
-        starFavorite(targetClass, cards[i])
-        deleteCard(targetClass, i)
-        openCommentForm(targetClass, cards[i])
-      }
+function findTargetCard(idToTarget) {
+  for (var i = 0; i < cards.length; i++) {
+    if (cards[i].id == idToTarget) {
+      return cards[i]
     }
   }
+}
+
+function assignIdeaTask(event) {
+  var targetClass = event.target.classList
+  var targetIdea = event.target.closest('.idea')
+  // var idToTarget = event.target.closest('.idea').id
+  var targetCard = findTargetCard(targetIdea.id)
+
+  if (targetClass == 'star-icon-active') {
+      starFavorite(targetCard)
+
+  } else if ( targetClass == 'delete-icon-active' ) {
+    var index = cards.indexOf(targetCard)
+    deleteCard(index)
+
+  } else if (targetClass == 'comment-icon') {
+    openCommentForm(targetCard)
+
+  } else if (targetClass != 'ideas-grid') {
+    displayCommentsForIdea(targetIdea, targetCard)
+
+  }
+
   displayCards(cards)
 }
 
-function starFavorite(elementClass, targetCard) {
-  if (elementClass == 'star-icon-active') {
-    targetCard.toggleStar()
-    targetCard.saveToStorage()
-  }
+function starFavorite(targetCard) {
+  targetCard.toggleStar()
+  targetCard.saveToStorage()
 }
 
-function deleteCard(elementClass, targetIndex) {
-  if (elementClass == 'delete-icon-active') {
-    cards[targetIndex].deleteFromStorage()
-    cards.splice(targetIndex, 1)
-  }
+function deleteCard(targetIndex) {
+  cards[targetIndex].deleteFromStorage()
+  cards.splice(targetIndex, 1)
 }
 
 function showStarredCards() {
@@ -134,7 +166,7 @@ function showStarredCards() {
 function resetShowStarredButton() {
   filterMessage.innerText = 'All Your Ideas'
   showStarredButton.innerText = 'Show Starred Ideas'
-  starredCards = []
+
 }
 
 function search(event) {
@@ -163,30 +195,43 @@ function clearResults(resultsArray) {
 
 
 
-function openCommentForm(elementClass, idea) {
-  if (elementClass == 'comment-icon') {
-    formatCommentForm()
-    var addCommentButton = document.querySelector('.add-comment-button')
-    var commentInput = document.querySelector('.comment-input')
-    commentInput.addEventListener('keyup', function() {
-      enableButton(addCommentButton, commentInput.value)
-    })
-    addCommentButton.addEventListener('click', function(){
-      event.preventDefault()
-      idea.addComment(commentInput.value)
-      clear(commentInput)
-      enableButton(addCommentButton, commentInput.value)
-      idea.saveToStorage()
-    })
+function openCommentForm(idea) {
+  formatCommentForm()
+
+  function addComment() {
+    event.preventDefault()
+    enableButton(addCommentButton, commentInput.value)
+    idea.addComment(commentInput.value)
+    idea.saveToStorage()
+    displayComments(idea)
+    clear(commentInput)
+  }
+
+  addCommentButton.addEventListener('click', addComment)
+}
+
+function displayComments(idea) {
+  commentDisplay.innerHTML = ''
+  for (var i = 0; i < idea.comments.length; i++) {
+    commentDisplay.innerHTML += idea.comments[i].formatComment()
   }
 }
 
 function formatCommentForm() {
   ideasGrid.classList.add('blur')
   sidebar.classList.add('blur')
-  form.innerHTML =
-  `<div class="comment-form">
-    <textarea class="comment-input"></textarea>
-    <button class="add-comment-button" disabled="true">Add Comment</button>
-  </div>`
+  formToggle()
+}
+
+function formToggle() {
+  var formEles = document.querySelectorAll('.form-ele')
+  for (var i = 0; i < formEles.length; i++) {
+    formEles[i].classList.toggle('hidden')
+  }
+}
+
+function displayCommentsForIdea(targetClass, idea) {
+  console.log('Hi Rachel')
+  targetClass.classList.toggle('selected')
+  displayComments(idea)
 }

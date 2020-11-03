@@ -60,6 +60,48 @@ h2 {
   margin-top: 6%;
 }
 
+ .comment-display {
+   color: #A9AAD2;
+   padding-top: 3em;
+   display: flex;
+   flex-flow: column;
+   align-items: center;
+   justify-content: space-between;
+   height: 3vmin;
+
+}
+
+/* .display-comment-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.display-comment-bar .delete-button {
+  display: flex;
+  align-items: flex-end;
+  background-color: transparent;
+  border: none;
+} */
+
+.delete-comment-button {
+  background-color: #1F1F3D;
+  border: none;
+}
+
+.delete-comment-icon-active {
+  display: none;
+}
+
+.delete-comment-button:hover .delete-icon {
+  display: none;
+}
+
+.delete-comment-button:hover .delete-icon-active {
+  display: inline;
+}
+
+
 /* FORM AREA */
 
 .input-form {
@@ -220,6 +262,10 @@ label {
   display: inline;
 }
 
+.selected {
+  border: 5vmin solid red;
+}
+
 .card-body {
   background-color: #FFFFFF;
   color: #1F1F3D;
@@ -305,4 +351,8 @@ p {
   background-color: #EAEAF4;
   color: #1F1F3D;
   cursor: not-allowed;
+}
+
+.hidden {
+  display: none!important;
 }

@@ -16,4 +16,20 @@ class Comment {
   assignToIdea(idea) {
     this.ideaId = idea.id
   }
+
+  formatComment() {
+    var commentHTML =
+      `<div class="comment" id="${this.id}">
+        <div class="display-comment-bar">
+          <button class="delete-comment-button">
+           <img class="delete-icon" src="assets/delete.svg" alt="delete ex">
+           <img class="delete-icon-active" src="assets/delete-active.svg" alt="delete ex">
+         </button>
+        </div>
+        <article class="comment-body">
+          <p>${this.content}</p>
+        </article>
+      </div>`
+    return commentHTML
+  }
 }
