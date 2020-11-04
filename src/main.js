@@ -33,6 +33,7 @@ commentInput.addEventListener('keyup', function() {
   toggleButton(addCommentButton, commentInput.value)
 })
 commentDisplay.addEventListener('click', deleteComment)
+addCommentButton.addEventListener('click', addComment)
 exitCommentForm.addEventListener('click', closeCommentForm)
 
 
@@ -75,7 +76,6 @@ function loadFromStorage() {
   for (var i=0; i < localStorage.length; i++) {
     storedObject = JSON.parse(localStorage.getItem(localStorage.key(i)))
     newCommentArray = loadComment(storedObject)
-      console.log(newCommentArray)
     newIdeaInstance = loadIdea(storedObject, newCommentArray)
     cards.push(newIdeaInstance)
   }
@@ -130,10 +130,11 @@ function assignIdeaTask(event) {
     commentDisplay.innerHTML = ''
 
   } else if (targetClass == 'comment-icon') {
-    openCommentForm(targetCard)
+    toggleCommentForm()
+    addCommentButton.id = targetIdea.id
 
   } else if (targetClass != 'ideas-grid') {
-    console.log(targetIdea)
+
     displayCommentsForIdea(targetIdea, targetCard)
 
   }
@@ -223,21 +224,18 @@ function clearResults(resultsArray) {
 
 
 
-function openCommentForm(idea) {
-  toggleCommentForm()
 
-  function addComment() {
-    event.preventDefault()
-
-    idea.addComment(commentInput.value)
-    idea.saveToStorage()
-    displayComments(idea)
-    clear(commentInput)
-    toggleButton(addCommentButton, commentInput.value)
+function addComment(event) {
+  event.preventDefault()
+  idToTarget = addCommentButton.id
+  var ideaToComment = findTargetCard(idToTarget)
+  ideaToComment.addComment(commentInput.value)
+  ideaToComment.saveToStorage()
+  displayComments(ideaToComment)
+  clear(commentInput)
+  toggleButton(addCommentButton, commentInput.value)
   }
 
-  addCommentButton.addEventListener('click', addComment)
-}
 
 function closeCommentForm(event) {
   console.log(event)
@@ -266,7 +264,5 @@ function formToggle() {
 }
 
 function displayCommentsForIdea(targetClass, idea) {
-  console.log('Hi Rachel')
-  targetClass.classList.toggle('selected')
   displayComments(idea)
 }
