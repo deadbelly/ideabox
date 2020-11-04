@@ -22,15 +22,15 @@ window.addEventListener('load', loadFromStorage)
 showStarredButton.addEventListener('click', showStarredCards)
 saveButton.addEventListener('click', saveCard)
 titleInput.addEventListener('keyup', function() {
-  enableButton(saveButton, (titleInput.value && bodyInput.value))
+  toggleButton(saveButton, (titleInput.value && bodyInput.value))
 })
 bodyInput.addEventListener('keyup', function() {
-  enableButton(saveButton, (titleInput.value && bodyInput.value))
+  toggleButton(saveButton, (titleInput.value && bodyInput.value))
 })
 searchBar.addEventListener('keyup', search)
 ideasGrid.addEventListener('click', assignIdeaTask)
 commentInput.addEventListener('keyup', function() {
-  enableButton(addCommentButton, commentInput.value)
+  toggleButton(addCommentButton, commentInput.value)
 })
 commentDisplay.addEventListener('click', deleteComment)
 exitCommentForm.addEventListener('click', closeCommentForm)
@@ -39,7 +39,7 @@ exitCommentForm.addEventListener('click', closeCommentForm)
 //functions
 function saveCard(event) {
   event.preventDefault()
-  enableButton(saveButton, (titleInput.value && bodyInput.value))
+  toggleButton(saveButton, (titleInput.value && bodyInput.value))
   resetShowStarredButton()
   var newIdea = new Idea(titleInput.value, bodyInput.value)
   cards.push(newIdea)
@@ -57,7 +57,7 @@ function displayCards(cardArray) {
   }
 }
 
-function enableButton(button, inputCheck) {
+function toggleButton(button, inputCheck) {
   if (inputCheck) {
     button.disabled = false
   } else {
@@ -228,20 +228,21 @@ function openCommentForm(idea) {
 
   function addComment() {
     event.preventDefault()
-    enableButton(addCommentButton, commentInput.value)
+
     idea.addComment(commentInput.value)
     idea.saveToStorage()
     displayComments(idea)
     clear(commentInput)
+    toggleButton(addCommentButton, commentInput.value)
   }
 
   addCommentButton.addEventListener('click', addComment)
 }
 
 function closeCommentForm(event) {
-  event.preventDefault()
+  console.log(event)
   toggleCommentForm()
-
+  event.preventDefault()
 }
 
 function displayComments(idea) {
