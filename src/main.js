@@ -150,6 +150,7 @@ function deleteCard(targetIndex) {
 function deleteComment(event) {
   var targetIdeaId = event.target.closest('.comment').id
   var targetClassList = event.target.classList
+
   var targetCommentBodyId = event.target.closest('.display-comment-bar').id
   if (targetClassList == 'delete-icon-active') {
     for (var i = 0; i < cards.length; i++) {
@@ -158,14 +159,15 @@ function deleteComment(event) {
           if(targetCommentBodyId == cards[i].comments[j].id) {
             cards[i].comments.splice(j,1)
             cards[i].saveToStorage()
+            displayComments(cards[i])
+            break
             console.log(cards[i].comments)
           }
         }
       }
     }
   }
-  displayComments()
-  displayCards()
+  displayCards(cards)
 }
 
 function showStarredCards() {

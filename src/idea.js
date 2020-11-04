@@ -78,7 +78,7 @@ class Idea {
   }
 
   countComments() {
-    if (this.comments) {
+    if (this.comments.length) {
       return `Comments (${this.comments.length})`
     } else {
       return `Comment`
