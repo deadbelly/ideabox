@@ -15,28 +15,31 @@ var sidebar = document.querySelector('.sidebar')
 var addCommentButton = document.querySelector('.add-comment-button')
 var commentInput = document.querySelector('.comment-input')
 var commentDisplay = document.querySelector('.comment-display')
+var exitCommentForm = document.querySelector('.delete-button')
 
 //event listeners
 window.addEventListener('load', loadFromStorage)
 showStarredButton.addEventListener('click', showStarredCards)
 saveButton.addEventListener('click', saveCard)
 titleInput.addEventListener('keyup', function() {
-  enableButton(saveButton, (titleInput.value && bodyInput.value))
+  toggleButton(saveButton, (titleInput.value && bodyInput.value))
 })
 bodyInput.addEventListener('keyup', function() {
-  enableButton(saveButton, (titleInput.value && bodyInput.value))
+  toggleButton(saveButton, (titleInput.value && bodyInput.value))
 })
 searchBar.addEventListener('keyup', search)
 ideasGrid.addEventListener('click', assignIdeaTask)
 commentInput.addEventListener('keyup', function() {
-  enableButton(addCommentButton, commentInput.value)
+  toggleButton(addCommentButton, commentInput.value)
 })
+commentDisplay.addEventListener('click', deleteComment)
+exitCommentForm.addEventListener('click', closeCommentForm)
 
 
 //functions
 function saveCard(event) {
   event.preventDefault()
-  enableButton(saveButton, (titleInput.value && bodyInput.value))
+  toggleButton(saveButton, (titleInput.value && bodyInput.value))
   resetShowStarredButton()
   var newIdea = new Idea(titleInput.value, bodyInput.value)
   cards.push(newIdea)
@@ -54,7 +57,7 @@ function displayCards(cardArray) {
   }
 }
 
-function enableButton(button, inputCheck) {
+function toggleButton(button, inputCheck) {
   if (inputCheck) {
     button.disabled = false
   } else {
@@ -121,14 +124,16 @@ function assignIdeaTask(event) {
   if (targetClass == 'star-icon-active') {
       starFavorite(targetCard)
 
-  } else if ( targetClass == 'delete-icon-active' ) {
+  } else if (targetClass == 'delete-icon-active') {
     var index = cards.indexOf(targetCard)
     deleteCard(index)
+    commentDisplay.innerHTML = ''
 
   } else if (targetClass == 'comment-icon') {
     openCommentForm(targetCard)
 
   } else if (targetClass != 'ideas-grid') {
+    console.log(targetIdea)
     displayCommentsForIdea(targetIdea, targetCard)
 
   }
@@ -144,6 +149,29 @@ function starFavorite(targetCard) {
 function deleteCard(targetIndex) {
   cards[targetIndex].deleteFromStorage()
   cards.splice(targetIndex, 1)
+}
+
+function deleteComment(event) {
+  var targetIdeaId = event.target.closest('.comment').id
+  var targetClassList = event.target.classList
+
+  var targetCommentBodyId = event.target.closest('.display-comment-bar').id
+  if (targetClassList == 'delete-icon-active') {
+    for (var i = 0; i < cards.length; i++) {
+      if (targetIdeaId == cards[i].id){
+        for (var j = 0; j < cards[i].comments.length; j++) {
+          if(targetCommentBodyId == cards[i].comments[j].id) {
+            cards[i].comments.splice(j,1)
+            cards[i].saveToStorage()
+            displayComments(cards[i])
+            break
+            console.log(cards[i].comments)
+          }
+        }
+      }
+    }
+  }
+  displayCards(cards)
 }
 
 function showStarredCards() {
@@ -196,18 +224,25 @@ function clearResults(resultsArray) {
 
 
 function openCommentForm(idea) {
-  formatCommentForm()
+  toggleCommentForm()
 
   function addComment() {
     event.preventDefault()
-    enableButton(addCommentButton, commentInput.value)
+
     idea.addComment(commentInput.value)
     idea.saveToStorage()
     displayComments(idea)
     clear(commentInput)
+    toggleButton(addCommentButton, commentInput.value)
   }
 
   addCommentButton.addEventListener('click', addComment)
+}
+
+function closeCommentForm(event) {
+  console.log(event)
+  toggleCommentForm()
+  event.preventDefault()
 }
 
 function displayComments(idea) {
@@ -217,9 +252,9 @@ function displayComments(idea) {
   }
 }
 
-function formatCommentForm() {
-  ideasGrid.classList.add('blur')
-  sidebar.classList.add('blur')
+function toggleCommentForm() {
+  ideasGrid.classList.toggle('blur')
+  sidebar.classList.toggle('blur')
   formToggle()
 }
 
