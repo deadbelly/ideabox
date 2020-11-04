@@ -33,6 +33,7 @@ commentInput.addEventListener('keyup', function() {
   toggleButton(addCommentButton, commentInput.value)
 })
 commentDisplay.addEventListener('click', deleteComment)
+addCommentButton.addEventListener('click', addComment)
 exitCommentForm.addEventListener('click', closeCommentForm)
 
 
@@ -75,7 +76,6 @@ function loadFromStorage() {
   for (var i=0; i < localStorage.length; i++) {
     storedObject = JSON.parse(localStorage.getItem(localStorage.key(i)))
     newCommentArray = loadComment(storedObject)
-      console.log(newCommentArray)
     newIdeaInstance = loadIdea(storedObject, newCommentArray)
     cards.push(newIdeaInstance)
   }
@@ -117,27 +117,20 @@ function findTargetCard(idToTarget) {
 
 function assignIdeaTask(event) {
   var targetClass = event.target.classList
-  var targetIdea = event.target.closest('.idea')
-  // var idToTarget = event.target.closest('.idea').id
-  var targetCard = findTargetCard(targetIdea.id)
-
+  var card = event.target.closest('.idea')
+  var idea = findTargetCard(card.id)
   if (targetClass == 'star-icon-active') {
-      starFavorite(targetCard)
-
+      starFavorite(idea)
   } else if (targetClass == 'delete-icon-active') {
-    var index = cards.indexOf(targetCard)
+    var index = cards.indexOf(idea)
     deleteCard(index)
     commentDisplay.innerHTML = ''
-
   } else if (targetClass == 'comment-icon') {
-    openCommentForm(targetCard)
-
+    toggleCommentForm()
+    addCommentButton.id = card.id
   } else if (targetClass != 'ideas-grid') {
-    console.log(targetIdea)
-    displayCommentsForIdea(targetIdea, targetCard)
-
+    displayComments(idea)
   }
-
   displayCards(cards)
 }
 
@@ -223,21 +216,18 @@ function clearResults(resultsArray) {
 
 
 
-function openCommentForm(idea) {
-  toggleCommentForm()
 
-  function addComment() {
-    event.preventDefault()
-
-    idea.addComment(commentInput.value)
-    idea.saveToStorage()
-    displayComments(idea)
-    clear(commentInput)
-    toggleButton(addCommentButton, commentInput.value)
+function addComment(event) {
+  event.preventDefault()
+  idToTarget = addCommentButton.id
+  var ideaToComment = findTargetCard(idToTarget)
+  ideaToComment.addComment(commentInput.value)
+  ideaToComment.saveToStorage()
+  displayComments(ideaToComment)
+  clear(commentInput)
+  toggleButton(addCommentButton, commentInput.value)
   }
 
-  addCommentButton.addEventListener('click', addComment)
-}
 
 function closeCommentForm(event) {
   console.log(event)
@@ -263,10 +253,4 @@ function formToggle() {
   for (var i = 0; i < formEles.length; i++) {
     formEles[i].classList.toggle('hidden')
   }
-}
-
-function displayCommentsForIdea(targetClass, idea) {
-  console.log('Hi Rachel')
-  targetClass.classList.toggle('selected')
-  displayComments(idea)
 }
