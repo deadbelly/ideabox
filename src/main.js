@@ -15,6 +15,7 @@ var sidebar = document.querySelector('.sidebar')
 var addCommentButton = document.querySelector('.add-comment-button')
 var commentInput = document.querySelector('.comment-input')
 var commentDisplay = document.querySelector('.comment-display')
+var exitCommentForm = document.querySelector('.delete-button')
 
 //event listeners
 window.addEventListener('load', loadFromStorage)
@@ -32,6 +33,8 @@ commentInput.addEventListener('keyup', function() {
   enableButton(addCommentButton, commentInput.value)
 })
 commentDisplay.addEventListener('click', deleteComment)
+exitCommentForm.addEventListener('click', closeCommentForm)
+
 
 //functions
 function saveCard(event) {
@@ -121,9 +124,10 @@ function assignIdeaTask(event) {
   if (targetClass == 'star-icon-active') {
       starFavorite(targetCard)
 
-  } else if ( targetClass == 'delete-icon-active' ) {
+  } else if (targetClass == 'delete-icon-active') {
     var index = cards.indexOf(targetCard)
     deleteCard(index)
+    commentDisplay.innerHTML = ''
 
   } else if (targetClass == 'comment-icon') {
     openCommentForm(targetCard)
@@ -220,7 +224,7 @@ function clearResults(resultsArray) {
 
 
 function openCommentForm(idea) {
-  formatCommentForm()
+  toggleCommentForm()
 
   function addComment() {
     event.preventDefault()
@@ -234,6 +238,12 @@ function openCommentForm(idea) {
   addCommentButton.addEventListener('click', addComment)
 }
 
+function closeCommentForm(event) {
+  event.preventDefault()
+  toggleCommentForm()
+
+}
+
 function displayComments(idea) {
   commentDisplay.innerHTML = ''
   for (var i = 0; i < idea.comments.length; i++) {
@@ -241,9 +251,9 @@ function displayComments(idea) {
   }
 }
 
-function formatCommentForm() {
-  ideasGrid.classList.add('blur')
-  sidebar.classList.add('blur')
+function toggleCommentForm() {
+  ideasGrid.classList.toggle('blur')
+  sidebar.classList.toggle('blur')
   formToggle()
 }
 
