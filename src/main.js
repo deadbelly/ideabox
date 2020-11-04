@@ -117,28 +117,20 @@ function findTargetCard(idToTarget) {
 
 function assignIdeaTask(event) {
   var targetClass = event.target.classList
-  var targetIdea = event.target.closest('.idea')
-  // var idToTarget = event.target.closest('.idea').id
-  var targetCard = findTargetCard(targetIdea.id)
-
+  var card = event.target.closest('.idea')
+  var idea = findTargetCard(card.id)
   if (targetClass == 'star-icon-active') {
-      starFavorite(targetCard)
-
+      starFavorite(idea)
   } else if (targetClass == 'delete-icon-active') {
-    var index = cards.indexOf(targetCard)
+    var index = cards.indexOf(idea)
     deleteCard(index)
     commentDisplay.innerHTML = ''
-
   } else if (targetClass == 'comment-icon') {
     toggleCommentForm()
-    addCommentButton.id = targetIdea.id
-
+    addCommentButton.id = card.id
   } else if (targetClass != 'ideas-grid') {
-
-    displayCommentsForIdea(targetIdea, targetCard)
-
+    displayComments(idea)
   }
-
   displayCards(cards)
 }
 
@@ -261,8 +253,4 @@ function formToggle() {
   for (var i = 0; i < formEles.length; i++) {
     formEles[i].classList.toggle('hidden')
   }
-}
-
-function displayCommentsForIdea(targetClass, idea) {
-  displayComments(idea)
 }
