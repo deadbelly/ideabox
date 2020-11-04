@@ -19,8 +19,8 @@ class Comment {
 
   formatComment() {
     var commentHTML =
-      `<div class="comment" id="${this.id}">
-        <div class="display-comment-bar">
+      `<div class="comment" id="${this.ideaId}">
+        <div class="display-comment-bar" id="${this.id}">
           <button class="delete-comment-button">
            <img class="delete-icon" src="assets/delete.svg" alt="delete ex">
            <img class="delete-icon-active" src="assets/delete-active.svg" alt="delete ex">

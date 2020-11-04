@@ -31,7 +31,7 @@ ideasGrid.addEventListener('click', assignIdeaTask)
 commentInput.addEventListener('keyup', function() {
   enableButton(addCommentButton, commentInput.value)
 })
-
+commentDisplay.addEventListener('click', deleteComment)
 
 //functions
 function saveCard(event) {
@@ -129,6 +129,7 @@ function assignIdeaTask(event) {
     openCommentForm(targetCard)
 
   } else if (targetClass != 'ideas-grid') {
+    console.log(targetIdea)
     displayCommentsForIdea(targetIdea, targetCard)
 
   }
@@ -144,6 +145,27 @@ function starFavorite(targetCard) {
 function deleteCard(targetIndex) {
   cards[targetIndex].deleteFromStorage()
   cards.splice(targetIndex, 1)
+}
+
+function deleteComment(event) {
+  var targetIdeaId = event.target.closest('.comment').id
+  var targetClassList = event.target.classList
+  var targetCommentBodyId = event.target.closest('.display-comment-bar').id
+  if (targetClassList == 'delete-icon-active') {
+    for (var i = 0; i < cards.length; i++) {
+      if (targetIdeaId == cards[i].id){
+        for (var j = 0; j < cards[i].comments.length; j++) {
+          if(targetCommentBodyId == cards[i].comments[j].id) {
+            cards[i].comments.splice(j,1)
+            cards[i].saveToStorage()
+            console.log(cards[i].comments)
+          }
+        }
+      }
+    }
+  }
+  displayComments()
+  displayCards()
 }
 
 function showStarredCards() {

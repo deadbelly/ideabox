@@ -263,7 +263,7 @@ label {
 }
 
 .selected {
-  border: 5vmin solid red;
+  border: 5vmin solid red!important;
 }
 
 .card-body {
