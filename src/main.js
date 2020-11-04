@@ -2,51 +2,47 @@
 var cards = []
 
 //querySelectors
+var sidebar = document.querySelector('.sidebar')
+var filterMessage = document.querySelector('h2')
 var showStarredButton = document.querySelector('.show-starred-button')
+
+var form = document.querySelector('form')
 var titleInput = document.querySelector('.title-input')
 var bodyInput = document.querySelector('.body-input')
 var saveButton = document.querySelector('.save-button')
-var searchButton = document.querySelector('.search-button')
 var searchBar = document.querySelector('.search-bar')
+
 var ideasGrid = document.querySelector('.ideas-grid')
-var filterMessage = document.querySelector('h2')
-var form = document.querySelector('form')
-var sidebar = document.querySelector('.sidebar')
-var addCommentButton = document.querySelector('.add-comment-button')
-var commentInput = document.querySelector('.comment-input')
+
 var commentDisplay = document.querySelector('.comment-display')
 var exitCommentForm = document.querySelector('.delete-button')
+var commentInput = document.querySelector('.comment-input')
+var addCommentButton = document.querySelector('.add-comment-button')
 
 //event listeners
 window.addEventListener('load', loadFromStorage)
-showStarredButton.addEventListener('click', showStarredCards)
-saveButton.addEventListener('click', saveCard)
-titleInput.addEventListener('keyup', function() {
-  toggleButton(saveButton, (titleInput.value && bodyInput.value))
-})
-bodyInput.addEventListener('keyup', function() {
-  toggleButton(saveButton, (titleInput.value && bodyInput.value))
-})
-searchBar.addEventListener('keyup', search)
-ideasGrid.addEventListener('click', assignIdeaTask)
-commentInput.addEventListener('keyup', function() {
-  toggleButton(addCommentButton, commentInput.value)
-})
-commentDisplay.addEventListener('click', deleteComment)
-addCommentButton.addEventListener('click', addComment)
-exitCommentForm.addEventListener('click', closeCommentForm)
 
+showStarredButton.addEventListener('click', showStarredCards)
+
+form.addEventListener('keyup', toggleAllButtons)
+saveButton.addEventListener('click', saveCard)
+searchBar.addEventListener('keyup', search)
+
+ideasGrid.addEventListener('click', assignIdeaTask)
+
+commentDisplay.addEventListener('click', deleteAndDisplayComment)
+exitCommentForm.addEventListener('click', closeCommentForm)
+addCommentButton.addEventListener('click', addCommentAndUpdate)
 
 //functions
 function saveCard(event) {
   event.preventDefault()
-  toggleButton(saveButton, (titleInput.value && bodyInput.value))
   resetShowStarredButton()
   var newIdea = new Idea(titleInput.value, bodyInput.value)
   cards.push(newIdea)
   displayCards(cards)
-  clear(titleInput)
-  clear(bodyInput)
+  clearInputs()
+  toggleAllButtons()
   newIdea.saveToStorage()
 }
 
@@ -58,53 +54,33 @@ function displayCards(cardArray) {
   }
 }
 
-function toggleButton(button, inputCheck) {
-  if (inputCheck) {
+function toggleAllButtons() {
+  toggleButton(saveButton, (titleInput.value && bodyInput.value))
+  toggleButton(addCommentButton, commentInput.value)
+}
+
+function toggleButton(button, condition) {
+  if (condition) {
     button.disabled = false
   } else {
     button.disabled = true
   }
 }
 
-function clear(formInput) {
-  formInput.value = ''
+function clearInputs() {
+  titleInput.value = ''
+  bodyInput.value = ''
+  commentInput.value = ''
 }
 
 function loadFromStorage() {
-  var storedObject
-  var newIdeaInstantiation
   for (var i=0; i < localStorage.length; i++) {
-    storedObject = JSON.parse(localStorage.getItem(localStorage.key(i)))
-    newCommentArray = loadComment(storedObject)
-    newIdeaInstance = loadIdea(storedObject, newCommentArray)
-    cards.push(newIdeaInstance)
+    var storedObject = JSON.parse(localStorage.getItem(localStorage.key(i)))
+    var reInstantiation = new Idea()
+    reInstantiation.loadStorageData(storedObject)
+    cards.push(reInstantiation)
   }
   displayCards(cards)
-}
-
-function loadComment(storedObject) {
-  var commentArray = []
-  for (var i = 0; i < storedObject.comments.length; i++) {
-    var comment = new Comment()
-
-    comment.id = storedObject.comments[i].id
-    comment.ideaId = storedObject.comments[i].ideaId
-    comment.content = storedObject.comments[i].content
-
-    commentArray.push(comment)
-  }
-  return commentArray
-}
-
-function loadIdea(dataObject, newCommentArray) {
-  var idea = new Idea()
-  idea.id = dataObject.id
-  idea.title = dataObject.title
-  idea.body = dataObject.body
-  idea.star = dataObject.star
-  idea.comments = newCommentArray;
-
-  return idea
 }
 
 function findTargetCard(idToTarget) {
@@ -144,27 +120,25 @@ function deleteCard(targetIndex) {
   cards.splice(targetIndex, 1)
 }
 
-function deleteComment(event) {
-  var targetIdeaId = event.target.closest('.comment').id
-  var targetClassList = event.target.classList
-
-  var targetCommentBodyId = event.target.closest('.display-comment-bar').id
-  if (targetClassList == 'delete-icon-active') {
-    for (var i = 0; i < cards.length; i++) {
-      if (targetIdeaId == cards[i].id){
-        for (var j = 0; j < cards[i].comments.length; j++) {
-          if(targetCommentBodyId == cards[i].comments[j].id) {
-            cards[i].comments.splice(j,1)
-            cards[i].saveToStorage()
-            displayComments(cards[i])
-            break
-            console.log(cards[i].comments)
-          }
-        }
-      }
-    }
+function deleteAndDisplayComment(event) {
+  var ideaId = event.target.closest('.comment').id
+  var classList = event.target.classList
+  var commentId = event.target.closest('.display-comment-bar').id
+  if (classList == 'delete-icon-active') {
+    var idea = findTargetCard(ideaId)
+    deleteComment(idea, commentId)
+    idea.saveToStorage()
+    displayComments(idea)
   }
   displayCards(cards)
+}
+
+function deleteComment(idea, commentId) {
+  for (var i = 0; i < idea.comments.length; i++) {
+    if(commentId == idea.comments[i].id) {
+      idea.comments.splice(i,1)
+    }
+  }
 }
 
 function showStarredCards() {
@@ -217,22 +191,24 @@ function clearResults(resultsArray) {
 
 
 
-function addComment(event) {
+function addCommentAndUpdate(event) {
   event.preventDefault()
-  idToTarget = addCommentButton.id
-  var ideaToComment = findTargetCard(idToTarget)
-  ideaToComment.addComment(commentInput.value)
-  ideaToComment.saveToStorage()
-  displayComments(ideaToComment)
-  clear(commentInput)
-  toggleButton(addCommentButton, commentInput.value)
-  }
+  var idea = findTargetCard(addCommentButton.id)
+  addComment(idea)
+  displayComments(idea)
+  displayCards(cards)
+  clearInputs()
+  toggleAllButtons()
+}
 
+function addComment(idea) {
+  idea.addComment(commentInput.value)
+  idea.saveToStorage()
+}
 
 function closeCommentForm(event) {
-  console.log(event)
-  toggleCommentForm()
   event.preventDefault()
+  toggleCommentForm()
 }
 
 function displayComments(idea) {
