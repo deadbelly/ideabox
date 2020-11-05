@@ -8,12 +8,12 @@ class Comment {
   formatComment() {
     var commentHTML =
       `<div class="comment" id="${this.ideaId}">
-        <div class="display-comment-bar" id="${this.id}">
+        <span class="display-comment-bar" id="${this.id}">
           <button class="delete-comment-button">
            <img class="delete-icon" src="assets/delete.svg" alt="delete ex">
            <img class="delete-icon-active" src="assets/delete-active.svg" alt="delete ex">
          </button>
-        </div>
+        </span>
         <article class="comment-body">
           <p>${this.content}</p>
         </article>
