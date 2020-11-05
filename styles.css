@@ -21,6 +21,7 @@ main {
  flex-direction: column;
  height: 100vh;
  width: 26%;
+ overflow: auto;
 }
 
 h1 {
@@ -58,31 +59,8 @@ h2 {
   margin-left: 6%;
   margin-right: 6%;
   margin-top: 6%;
+  cursor: pointer;
 }
-
- .comment-display {
-   color: #A9AAD2;
-   padding-top: 3em;
-   display: flex;
-   flex-flow: column;
-   align-items: center;
-   justify-content: space-between;
-   height: 3vmin;
-
-}
-
-/* .display-comment-bar {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-}
-
-.display-comment-bar .delete-button {
-  display: flex;
-  align-items: flex-end;
-  background-color: transparent;
-  border: none;
-} */
 
 .delete-comment-button {
   background-color: #1F1F3D;
@@ -151,8 +129,11 @@ label {
   background-color: #5356A4;
 }
 
+.save-button:disabled {
+    background-color: #EAEAF4;
+}
+
 .save-button:hover:disabled {
-  background-color: #EAEAF4;
   cursor: not-allowed;
 }
 
@@ -162,7 +143,7 @@ label {
   width: 100%;
 }
 
-.search-button {
+.search-icon-area {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,7 +179,7 @@ label {
   flex-flow: row wrap;
   justify-content: flex-start;
   padding: 0;
-
+  overflow: auto;
 }
 
 .idea {
@@ -322,6 +303,37 @@ p {
   opacity: 50%;
 }
 
+.comment {
+  background-color: #FFFFFF;
+  color: #1F1F3D;
+  height: 8em;
+  font-size: 2.1vmin;
+  width: 80%;
+  margin-top: 10px;
+  border: 3px solid #5356A4;
+  height: 15vmin;
+}
+
+.comment-display {
+  color: #A9AAD2;
+  padding-top: 3em;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 50vmin;
+  width: 100%;
+
+}
+
+.display-comment-bar {
+  background-color: #5356A4;
+  display: flex;
+  justify-content: flex-end;
+  height: 1.3em;
+
+}
+
 .comment-form {
   display: flex;
   flex-direction: column;
@@ -340,7 +352,7 @@ p {
   color: #E9E9F3;
   font-size: 2.1vmin;
   font-weight: bold;
-  height: 2.3em;
+  height: 1.5em;
 }
 
 .add-comment-button:hover {
