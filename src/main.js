@@ -5,6 +5,7 @@ var cards = []
 var sidebar = document.querySelector('.sidebar')
 var filterMessage = document.querySelector('h2')
 var showStarredButton = document.querySelector('.show-starred-button')
+var commentLabel = document.querySelector('.comment-label')
 
 var form = document.querySelector('form')
 var titleInput = document.querySelector('.title-input')
@@ -106,6 +107,7 @@ function assignIdeaTask(event) {
     addCommentButton.id = card.id
   } else if (targetClass != 'ideas-grid') {
     displayComments(idea)
+    updateCommentLabel(idea)
   }
   displayCards(cards)
 }
@@ -185,17 +187,12 @@ function clearResults(resultsArray) {
   }
 }
 
-
-////////
-
-
-
-
 function addCommentAndUpdate(event) {
   event.preventDefault()
   var idea = findTargetCard(addCommentButton.id)
   addComment(idea)
   displayComments(idea)
+  updateCommentLabel(idea)
   displayCards(cards)
   clearInputs()
   toggleAllButtons()
@@ -215,6 +212,14 @@ function displayComments(idea) {
   commentDisplay.innerHTML = ''
   for (var i = 0; i < idea.comments.length; i++) {
     commentDisplay.innerHTML += idea.comments[i].formatComment()
+  }
+}
+
+function updateCommentLabel(idea) {
+  if (idea.comments.length) {
+    commentLabel.innerText = `Displaying comments for ${idea.title}`
+  } else {
+    commentLabel.innerText = ''
   }
 }
 
