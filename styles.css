@@ -320,7 +320,7 @@ p {
   display: flex;
   flex-flow: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   height: 50vmin;
   width: 100%;
 
